@@ -30,9 +30,9 @@
 #define __ap_ops_eq			 15
 #define __ap_ops_neq		 16
 
-#define __ap_ops_and		 17
-#define __ap_ops_or 		 18
-#define __ap_ops_not		 19
+#define __ap_ops_log_and	 17
+#define __ap_ops_log_or 	 18
+#define __ap_ops_log_not	 19
 
 #define __ap_ops_bit_and     20
 #define __ap_ops_bit_and_eq  21
@@ -42,22 +42,21 @@
 #define __ap_ops_bit_xor_eq  25
 #define __ap_ops_bit_not     26
 
-#define __ap_ops_new		 27
-#define __ap_ops_clone	     28
-#define __ap_ops_del		 29
+#define __ap_ops_push		 27
+#define __ap_ops_pop	     28
+#define __ap_ops_bind		 29
 
 #define __ap_ops_call		 30
 #define __ap_ops_ret		 31
 
-#define __ap_ops_if		     32
-#define __ap_ops_elif		 33
-#define __ap_ops_else		 34
+#define __ap_ops_cond_if	 32
+#define __ap_ops_cond_elif	 33
+#define __ap_ops_cond_else	 34
 
-#define __ap_ops_while	     35
-#define __ap_ops_for		 36
+#define __ap_ops_loop_while	 35
+#define __ap_ops_loo_for	 36
 
 #define __ap_ops_ref		 37
-#define __ap_ops_bind		 38
 
 extern obj_trait __ap_ops_trait;
 typedef struct   __ap_ops	   {

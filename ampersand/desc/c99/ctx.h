@@ -3,11 +3,6 @@
 
 #include <ampersand/base/obj.h>
 
-extern obj_trait* c99_desc_t;
-
-void
-	c99_desc_to_str
-		(obj*, str*);
-
+extern obj_trait* c99_ctx_t;
 
 #endif

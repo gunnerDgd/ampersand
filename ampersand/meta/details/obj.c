@@ -3,6 +3,15 @@
 
 #include <string.h>
 
+obj_trait __ap_obj_trait				  = {
+	.init		   = &__ap_obj_init		    ,
+	.init_as_clone = &__ap_obj_init_as_clone,
+	.init_as_ref   = &__ap_obj_init_as_ref  ,
+	.deinit		   = &__ap_obj_deinit	    ,
+	.name		   = &__ap_obj_name		    ,
+	.size		   = &__ap_obj_size 
+};
+
 bool_t
 	__ap_obj_init
 		(__ap_obj* par_obj, u32_t par_count, va_list par) {

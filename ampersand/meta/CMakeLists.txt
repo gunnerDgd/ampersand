@@ -53,37 +53,35 @@ add_library(ampersand-meta STATIC
     ../meta.cpp
 
     ops/arith.hpp
-    ops/arith.cpp
+    ops/arith_ops.hpp
 
-    #ops/bit.hpp
-    #ops/bit.cpp
+    ops/cmp.hpp
+    ops/cmp_ops.hpp
 
-    #ops/cmp.hpp
-    #ops/cmp.cpp
+    ops/bit.hpp
+    ops/bit_ops.hpp
 
-    #ops/logical.hpp
-    #ops/logical.cpp
+    ops/logical.hpp
+    ops/logical_ops.hpp
+
+    ops/obj.hpp
+    #ops/func.hpp
 
     type.hpp
     type.cpp
 
     obj.hpp
-    obj.cpp
+    val.hpp
+    elem.hpp
 
     #ops.hpp
     #ops.cpp
 
-    #val.hpp
-    #val.cpp
-    
-    elem.hpp
-    elem.cpp
+    func.hpp
+    func.cpp
 
-    #func.hpp
-    #func.cpp
-
-    #script.hpp
-    #script.cpp
+    script.hpp
+    script.cpp
 )
 
 target_compile_definitions(ampersand-meta   PRIVATE PRESET_WIN32)

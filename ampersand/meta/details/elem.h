@@ -15,10 +15,10 @@
 
 extern obj_trait __ap_elem_trait;
 typedef struct   __ap_elem		{
-	obj				  head	  ;
-	str				  name	  ;
-	union					  {
-	struct					  {
+	obj				  head	    ;
+	str				  name	    ;
+	union					    {
+	struct					    {
 		u64_t acc  : 3;
 		u64_t stor : 3;
 	};

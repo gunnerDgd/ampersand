@@ -5,9 +5,9 @@
 
 namespace ap	  {
 namespace details {
-	struct pub    { auto operator()(type_t auto); };
-	struct priv   { auto operator()(type_t auto); };
-	struct prot   { auto operator()(type_t auto); };
+	struct pub    { auto operator()(ap::type_t auto); };
+	struct priv   { auto operator()(ap::type_t auto); };
+	struct prot   { auto operator()(ap::type_t auto); };
 	struct stat   {
 		auto operator|(pub) ;
 		auto operator|(priv);
@@ -22,7 +22,7 @@ namespace details {
 
 	auto
 		details::stat::operator|(details::pub par) {
-			return [par](type_t auto type)    {
+			return [par](ap::type_t auto type)    {
 				return [par, type](const char* name) {
 					return elem<acc::pub, stor::stat, decltype(type)> { name, type };
 				};
@@ -31,7 +31,7 @@ namespace details {
 
 	auto 
 		details::stat::operator|(details::priv par) {
-			return [par](type_t auto type)       {
+			return [par](ap::type_t auto type)       {
 				return [par, type](const char* name)    {
 					return elem<acc::priv, stor::stat, decltype(type)> { name, type };
 				};
@@ -40,7 +40,7 @@ namespace details {
 
 	auto 
 		details::stat::operator|(details::prot par) {
-			return [par](type_t auto type)    {
+			return [par](ap::type_t auto type)    {
 				return [par, type](const char* name) {
 					return elem<acc::prot, stor::stat, decltype(type)> { name, type };
 				};
@@ -49,21 +49,21 @@ namespace details {
 
 
 	auto
-		details::pub::operator()(type_t auto par) {
+		details::pub::operator()(ap::type_t auto par) {
 			return [par](const char* name) {
 				return elem<acc::pub, stor::dyn, decltype(par)> { name, par };
 			};
 	}
 
 	auto
-		details::priv::operator()(type_t auto par) {
+		details::priv::operator()(ap::type_t auto par) {
 			return [par](const char* name) {
 				return elem<acc::priv, stor::dyn, decltype(par)> { name, par };
 			};
 	}
 
 	auto
-		details::prot::operator()(type_t auto par) {
+		details::prot::operator()(ap::type_t auto par) {
 			return [par](const char* name) {
 				return elem<acc::prot, stor::dyn, decltype(par)> { name, par };
 			};

@@ -6,18 +6,23 @@
 
 #include "declare.hpp"
 #include "../desc/declare.hpp"
+#include "../details/var.hpp"
 
 extern "C"
 {
 #include "type.h"
 }
 
-namespace ap {
+#define AP_TYPE_FRIEND\
+	template <acc A, stor S, typename... T> friend class elem	  ;\
+	template <typename... T>				friend class obj	  ;\
+	template <typename T>					friend class val	  ;\
+											friend class c99::desc;
+
+namespace ap		{
 	template <std::integral T>
 	class type<T>	{
-		template <acc A, stor S, typename... T> friend class elem	  ;
-		template <typename... T>				friend class obj	  ;
-												friend class c99::desc;
+		AP_TYPE_FRIEND
 		::obj* m_obj;
 	public:
 		 type()					{
@@ -39,13 +44,14 @@ namespace ap {
 		 type(const type<T>& par) : m_obj(obj_init_as_ref(par.m_obj)) {}
 		 type(type<T>&& par)	  : m_obj(obj_init_as_ref(par.m_obj)) {}
 		~type()									  { obj_deinit(m_obj); }
+
+		auto operator()()					{ return details::var<type<T>>			    (*this)		 ; }
+		auto operator()(ops_arg_t auto par) { return details::var<type<T>, decltype(par)>(*this, par); }
 	};
 
 	template <std::floating_point T>
 	class type<T>	{
-		template <acc A, stor S, typename... T> friend class elem	  ;
-		template <typename... T>				friend class obj	  ;
-												friend class c99::desc;
+		AP_TYPE_FRIEND
 		::obj* m_obj;
 	public:
 		 type()					{
@@ -60,13 +66,14 @@ namespace ap {
 		 type(const type& par) : m_obj(obj_init_as_ref(par.m_obj)) {}
 		 type(type&& par)	   : m_obj(obj_init_as_ref(par.m_obj)) {}
 		~type()								   { obj_deinit(m_obj); }
+
+		auto operator()()					{ return details::var<type<T>>			     (*this)	 ; }
+		auto operator()(ops_arg_t auto par) { return details::var<type<T>, decltype(par)>(*this, par); }
 	};					   
 
 	template <>
 	class type<void>			{
-		template <acc A, stor S, typename... T> friend class elem	  ;
-		template <typename... T>				friend class obj	  ;
-												friend class c99::desc;
+		AP_TYPE_FRIEND
 		::obj* m_obj;
 	public:
 		 type()					;
@@ -77,28 +84,30 @@ namespace ap {
 
 	template <>
 	class type<>	{
-		template <acc A, stor S, typename... T> friend class elem	  ;
-		template <typename... T>				friend class obj	  ;
-												friend class c99::desc;
+		AP_TYPE_FRIEND
 		::obj* m_obj;
 	public:
 		 type(const char*)  ;
 		 type(const type<>&);
 		 type(type<>&&)	    ;
 		~type()			    ;
+
+		auto operator()()				  ;
+		auto operator()(ops_arg_t auto...);
 	};
 
 	template <elem_t... T>
 	class type<T...> {
-		template <acc A, stor S, typename... T> friend class elem	  ;
-		template <typename... T>				friend class obj	  ;
-												friend class c99::desc;
+		AP_TYPE_FRIEND
 		::obj* m_obj;
 	public:
 		 type(const char*, T...);
 		 type(const type<T...>&);
 		 type(type<T...>&&)		;
 		~type()					;
+
+		auto operator()()																 { return details::var<type<T...>>				    (*this)		   ; }
+		auto operator()(ops_arg_t auto... par) requires (sizeof...(par) == sizeof...(T)) { return details::var<type<T...>, decltype(par)...>(*this, par...); }
 	};
 
 	template <elem_t... T> type(const char*, T...) -> type<T...>;

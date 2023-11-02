@@ -1,10 +1,17 @@
 #ifndef AMPERSAND_META_HPP
 #define AMPERSAND_META_HPP
 
+#include "meta/declare.hpp"
+
 #include "meta/type.hpp"
 #include "meta/elem.hpp"
 
-namespace ap						{
+#include "meta/func.hpp"
+#include "meta/obj.hpp"
+
+#include "meta/script.hpp"
+
+namespace ap				  {
 	type<std::int8_t>   i8  ();
 	type<std::int16_t>  i16 ();
 	type<std::int32_t>  i32 ();

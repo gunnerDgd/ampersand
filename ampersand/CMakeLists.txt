@@ -9,6 +9,8 @@ add_library        (ampersand STATIC
     elem.cpp
     
     var.hpp
+    details/var.hpp
+
     fn.hpp
 )
 

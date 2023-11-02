@@ -13,4 +13,7 @@ target_link_libraries     (ampersand-examples-strt PRIVATE
     
     ampersand-desc-c99
     ampersand-desc-c99-c
+
+    ampersand-desc
+    ampersand-desc-c
 )
