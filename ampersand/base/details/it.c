@@ -6,7 +6,7 @@ bool_t
 			if(!par_it->it)		   return false_t;
 			if(!par_it->it_parent) return false_t;
 
-			return par_it->trait->next(par_it);
+			return par_it->trait->on_next(par_it);
 }
 
 void*
@@ -15,7 +15,7 @@ void*
 			if(!par_it->it)		   return 0;
 			if(!par_it->it_parent) return 0;
 
-			return par_it->trait->get(par_it);
+			return par_it->trait->on_get(par_it);
 }
 
 void*
@@ -24,7 +24,7 @@ void*
 			if(!par_it->it)		   return 0;
 			if(!par_it->it_parent) return 0;
 
-			return par_it->trait->set(par_it, par_set);
+			return par_it->trait->on_set(par_it, par_set);
 }
 
 bool_t
@@ -36,7 +36,7 @@ bool_t
 			if(par_it->it_parent != par_it_cmp->it_parent)
 				return false_t;
 
-			return par_it->trait->eq(par_it, par_it_cmp);
+			return par_it->trait->on_eq(par_it, par_it_cmp);
 }
 
 bool_t
@@ -48,7 +48,7 @@ bool_t
 			if(par_it->it_parent != par_it_cmp->it_parent)
 				return false_t;
 
-			return par_it->trait->lt(par_it, par_it_cmp);
+			return par_it->trait->on_lt(par_it, par_it_cmp);
 }
 
 bool_t
@@ -60,5 +60,5 @@ bool_t
 			if(par_it->it_parent != par_it_cmp->it_parent)
 				return false_t;
 
-			return par_it->trait->gt(par_it, par_it_cmp);
+			return par_it->trait->on_gt(par_it, par_it_cmp);
 }

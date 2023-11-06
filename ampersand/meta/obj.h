@@ -5,8 +5,6 @@
 
 extern obj_trait* ap_obj_t;
 
-obj*
-	ap_obj_type
-		(obj*);
+obj* ap_obj_type(obj*);
 
 #endif

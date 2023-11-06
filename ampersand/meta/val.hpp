@@ -7,12 +7,15 @@ extern "C"
 #include "type.h"
 }
 
-#include "declare.hpp"
+#include "traits.hpp"
+
+#define AMPERSAND_VAL_FRIEND\
+	template <op O, typename... T> friend class ops;
 
 namespace ap {
 	template <std::integral T>
 	class val<type<T>> {
-		template <op O, typename... T> friend class ops;
+		AMPERSAND_VAL_FRIEND
 		::obj* m_obj;
 	public:
 		 val(T par)		  {
@@ -26,7 +29,7 @@ namespace ap {
 
 	template <std::floating_point T>
 	class val<type<T>> {
-		template <op O, typename... T> friend class ops;
+		AMPERSAND_VAL_FRIEND
 		::obj* m_obj;
 	public:
 		 val(T par)		  {

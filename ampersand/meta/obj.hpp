@@ -6,7 +6,7 @@ extern "C"
 #include "obj.h"
 }
 
-#include "declare.hpp"
+#include "traits.hpp"
 
 namespace ap			     {
 	template <typename... T>
@@ -19,6 +19,9 @@ namespace ap			     {
 		 obj(const obj<type<T...>>&)    ;
 		 obj(obj<type<T...>>&&) noexcept;
 		~obj()						    ;
+
+	public:
+		template <typename U> auto operator=(U) requires std::same_as<res_t<U>, type<T...>>;
 	};
 
 	template <typename... T> obj<type<T...>>:: obj(const char* par_name, type<T...> par) : m_obj(obj_init(0, ap_obj_t, 2, par.m_obj, par_name)) {}

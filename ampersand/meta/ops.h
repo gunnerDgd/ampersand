@@ -31,9 +31,9 @@
 #define ap_ops_eq		   15
 #define ap_ops_neq		   16
 
-#define ap_ops_and		   17
-#define ap_ops_or 		   18
-#define ap_ops_not		   19
+#define ap_ops_log_and	   17
+#define ap_ops_log_or 	   18
+#define ap_ops_log_not	   19
 
 #define ap_ops_bit_and     20
 #define ap_ops_bit_and_eq  21
@@ -43,32 +43,26 @@
 #define ap_ops_bit_xor_eq  25
 #define ap_ops_bit_not     26
 
-#define ap_ops_new		   27
-#define ap_ops_clone	   28
-#define ap_ops_del		   29
+#define ap_ops_push		   27
+#define ap_ops_pop		   28
+#define ap_ops_bind		   29
 
 #define ap_ops_call		   30
 #define ap_ops_ret		   31
 
-#define ap_ops_if		   31
-#define ap_ops_elif		   32
-#define ap_ops_else		   33
+#define ap_ops_cond_if	   32
+#define ap_ops_cond_elif   33
+#define ap_ops_cond_else   34
 
-#define ap_ops_while	   34
-#define ap_ops_for		   35
+#define ap_ops_loop_while  35
+#define ap_ops_loop_for	   36
+
+#define ap_ops_ref		   37
 
 extern obj_trait* ap_ops_t;
 
-u64_t
-	ap_ops_op
-		(obj*);
-
-it
-	ap_ops_arg_begin
-		(obj*);
-
-it
-	ap_ops_arg_end
-		(obj*);
+u64_t ap_ops_op		  (obj*);
+it    ap_ops_arg_begin(obj*);
+it	  ap_ops_arg_end  (obj*);
 
 #endif

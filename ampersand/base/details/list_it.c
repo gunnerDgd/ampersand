@@ -1,12 +1,12 @@
 #include "list_it.h"
 
-__it_trait __list_it_trait = {
-	.next = &__list_it_next  ,
-	.get  = &__list_it_get   ,
-	.set  = &__list_it_set	 ,
-	.lt   = &__list_it_lt	 ,
-	.gt   = &__list_it_gt	 ,
-	.eq   = &__list_it_eq  
+__it_trait __list_it_trait  = {
+	.on_next = &__list_it_next,
+	.on_get  = &__list_it_get ,
+	.on_set  = &__list_it_set ,
+	.on_lt   = &__list_it_lt  ,
+	.on_gt   = &__list_it_gt  ,
+	.on_eq   = &__list_it_eq
 };
 
 void

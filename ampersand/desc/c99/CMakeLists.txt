@@ -1,22 +1,7 @@
 project    (ampersand-desc-c99)
 add_library(ampersand-desc-c99 STATIC
-    details/ctx.h
-    details/ctx.c
-
-    details/ops.h
-    details/ops.c
-
-    details/strt.h
-    details/strt.c
-
-    details/func.h
-    details/func.c
-
-    details/script.h
-    details/script.c
-
-    ctx.h
-    ctx.c
+    c99.h
+    c99.c
 
     strt.h
     strt.c
@@ -31,4 +16,14 @@ add_library(ampersand-desc-c99 STATIC
     script.c
 )
 
-target_compile_definitions(ampersand-desc-c99 PRIVATE PRESET_WIN32)
+project    (ampersand-desc-c99-cpp)
+add_library(ampersand-desc-c99-cpp STATIC
+    ../c99.hpp
+    ../c99.cpp
+)
+
+target_compile_definitions(ampersand-desc-c99     PRIVATE    PRESET_WIN32)
+target_compile_definitions(ampersand-desc-c99-cpp PRIVATE    PRESET_WIN32)
+set_target_properties     (ampersand-desc-c99-cpp PROPERTIES CXX_STANDARD    20)
+set_target_properties     (ampersand-desc-c99-cpp PROPERTIES LINKER_LANGUAGE CXX)
+add_subdirectory          (details)

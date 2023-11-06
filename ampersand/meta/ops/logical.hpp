@@ -1,7 +1,7 @@
 #ifndef AMPERSAND_META_OPS_LOGICAL_HPP
 #define AMPERSAND_META_OPS_LOGICAL_HPP
 
-#include "../declare.hpp"
+#include "../traits.hpp"
 extern "C"
 {
 #include "../ops.h"
@@ -9,6 +9,7 @@ extern "C"
 
 namespace ap {
 	template <ops_arg_t T, ops_arg_t U>
+		requires boolean_t<res_t<T>> && boolean_t<res_t<U>>
 	class ops<op::log_and, T, U> {
 		::obj* m_obj;
 	public:
@@ -19,6 +20,7 @@ namespace ap {
 	};
 
 	template <ops_arg_t T, ops_arg_t U>
+		requires boolean_t<res_t<T>> && boolean_t<res_t<U>>
 	class ops<op::log_or, T, U> {
 		::obj* m_obj;
 	public:
@@ -29,6 +31,7 @@ namespace ap {
 	};
 
 	template <ops_arg_t T>
+		requires boolean_t<res_t<T>>
 	class ops<op::log_not, T> {
 		::obj* m_obj;
 	public:

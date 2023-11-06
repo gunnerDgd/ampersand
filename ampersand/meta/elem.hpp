@@ -9,11 +9,14 @@ extern "C"
 #include "elem.h"
 }
 
+#define AMPERSAND_ELEM_FRIEND				   \
+	template <typename... T> friend class type;\
+							 friend class desc;
+
 namespace ap {
 	template <acc A, stor S, typename... T>
 	class elem<A, S, type<T...>> {
-		template <typename... T> friend class type	   ;
-								 friend class c99::desc;
+		AMPERSAND_ELEM_FRIEND
 		::obj* m_obj;
 	public:
 		elem(const char*, type<T...>);

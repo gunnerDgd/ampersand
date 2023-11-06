@@ -1,24 +1,37 @@
 project    (ampersand-desc)
-add_library(ampersand-desc-c STATIC
+add_library(ampersand-desc-details STATIC
     details/desc.h
     details/desc.c
-
-    desc.h
-    desc.c
-
-    c99.h
-    c99.c
 )
 
 add_library(ampersand-desc STATIC
-    ../desc.hpp
+    desc.h
+    desc.c
 
-    c99.hpp
-    c99.cpp
+    func.h
+    func.c
+
+    ops.h
+    ops.c
+
+    strt.h
+    strt.c
+    
+    script.h
+    script.c
 )
 
-target_compile_definitions(ampersand-desc-c PRIVATE    PRESET_WIN32)
-target_compile_definitions(ampersand-desc   PRIVATE    PRESET_WIN32)
-set_target_properties     (ampersand-desc   PROPERTIES CXX_STANDARD    20)
-set_target_properties     (ampersand-desc   PROPERTIES LINKER_LANGUAGE CXX)
+add_library(ampersand-desc-cpp STATIC
+    ../desc.hpp
+    declare.hpp
+    desc.hpp
+    desc_friend.hpp
+    desc.cpp
+)
+
+target_compile_definitions(ampersand-desc         PRIVATE    PRESET_WIN32)
+target_compile_definitions(ampersand-desc-details PRIVATE    PRESET_WIN32)
+target_compile_definitions(ampersand-desc-cpp     PRIVATE    PRESET_WIN32)
+set_target_properties     (ampersand-desc-cpp     PROPERTIES CXX_STANDARD    20)
+set_target_properties     (ampersand-desc-cpp     PROPERTIES LINKER_LANGUAGE CXX)
 add_subdirectory          (c99)

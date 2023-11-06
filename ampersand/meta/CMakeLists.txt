@@ -1,5 +1,5 @@
 project    (ampersand-meta)
-add_library(ampersand-meta-c STATIC
+add_library(ampersand-meta STATIC
     details/obj.h
     details/obj.c
 
@@ -20,9 +20,6 @@ add_library(ampersand-meta-c STATIC
 
     details/elem.h
     details/elem.c
-
-    #details/mod.h
-    #details/mod.c
 
     type.h
     type.c
@@ -46,8 +43,19 @@ add_library(ampersand-meta-c STATIC
     elem.c
 )
 
-add_library(ampersand-meta STATIC
+add_library(ampersand-meta-cpp STATIC
     declare.hpp
+
+    traits/elem.hpp
+    traits/func.hpp
+    traits/obj.hpp
+    traits/ops.hpp
+    traits/res.hpp
+    traits/script.hpp
+    traits/type.hpp
+    traits/val.hpp
+    traits/common.hpp
+    traits.hpp
 
     ../meta.hpp
     ../meta.cpp
@@ -84,6 +92,6 @@ add_library(ampersand-meta STATIC
     script.cpp
 )
 
-target_compile_definitions(ampersand-meta   PRIVATE PRESET_WIN32)
-target_compile_definitions(ampersand-meta-c PRIVATE PRESET_WIN32)
-set_target_properties     (ampersand-meta PROPERTIES CXX_STANDARD 20)
+target_compile_definitions(ampersand-meta     PRIVATE PRESET_WIN32)
+target_compile_definitions(ampersand-meta-cpp PRIVATE PRESET_WIN32)
+set_target_properties     (ampersand-meta-cpp PROPERTIES CXX_STANDARD 20)

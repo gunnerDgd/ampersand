@@ -1,7 +1,8 @@
 #ifndef AMPERSAND_META_OPS_CMP_HPP
 #define AMPERSAND_META_OPS_CMP_HPP
 
-#include "../declare.hpp"
+#include "../traits.hpp"
+
 extern "C"
 {
 #include "../ops.h"
@@ -9,6 +10,7 @@ extern "C"
 
 namespace ap {
 	template <ops_arg_t T, ops_arg_t U>
+		requires (int_t<res_t<T>> || float_t<res_t<T>>) && (int_t<res_t<U>> || float_t<res_t<U>>)
 	class ops<op::gt, T, U> {
 		::obj* m_obj;
 	public:
@@ -19,6 +21,7 @@ namespace ap {
 	};
 
 	template <ops_arg_t T, ops_arg_t U>
+		requires (int_t<res_t<T>> || float_t<res_t<T>>) && (int_t<res_t<U>> || float_t<res_t<U>>)
 	class ops<op::gt_eq, T, U> {
 		::obj* m_obj;
 	public:
@@ -29,6 +32,7 @@ namespace ap {
 	};
 
 	template <ops_arg_t T, ops_arg_t U>
+		requires (int_t<res_t<T>> || float_t<res_t<T>>) && (int_t<res_t<U>> || float_t<res_t<U>>)
 	class ops<op::lt, T, U> {
 		::obj* m_obj;
 	public:
@@ -39,6 +43,7 @@ namespace ap {
 	};
 
 	template <ops_arg_t T, ops_arg_t U>
+		requires (int_t<res_t<T>> || float_t<res_t<T>>) && (int_t<res_t<U>> || float_t<res_t<U>>)
 	class ops<op::lt_eq, T, U> {
 		::obj* m_obj;
 	public:
@@ -49,6 +54,7 @@ namespace ap {
 	};
 
 	template <ops_arg_t T, ops_arg_t U>
+		requires (int_t<res_t<T>> || float_t<res_t<T>>) && (int_t<res_t<U>> || float_t<res_t<U>>)
 	class ops<op::eq, T, U> {
 		::obj* m_obj;
 	public:
@@ -59,6 +65,7 @@ namespace ap {
 	};
 
 	template <ops_arg_t T, ops_arg_t U>
+		requires (int_t<res_t<T>> || float_t<res_t<T>>) && (int_t<res_t<U>> || float_t<res_t<U>>)
 	class ops<op::neq, T, U> {
 		::obj* m_obj;
 	public:

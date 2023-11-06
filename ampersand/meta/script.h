@@ -6,12 +6,7 @@
 
 extern obj_trait* ap_script_t;
 
-it
-	ap_script_ops_begin
-		(obj*);
-
-it
-	ap_script_ops_end
-		(obj*);
+it ap_script_ops_begin(obj*);
+it ap_script_ops_end  (obj*);
 
 #endif

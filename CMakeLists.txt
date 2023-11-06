@@ -1,8 +1,14 @@
 project            (ampersand)
 set                (C_STANDARD   11)
 set                (CXX_STANDARD 20)
-set                (PRESET_X86_64       ON)
-set                (PRESET_DEFAULT_CSTD ON)
+set                (PRESET_X86_64   ON)
+set                (PRESET_ENV_CSTD ON)
+
+if    (WIN32)
+    set(PRESET_WIN32 ON)
+elseif(UNIX AND NOT APPLE)
+    set(PRESET_LINUX ON)
+endif ()
 
 include_directories(${CMAKE_SOURCE_DIR})
 add_subdirectory   (ampersand)

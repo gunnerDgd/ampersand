@@ -1,46 +1,37 @@
 #ifndef AMPERSAND_DESC_C99_HPP
 #define AMPERSAND_DESC_C99_HPP
 
+extern "C"
+{
+#include <ampersand/base/obj.h>
+
+#include "desc.h"
+#include "func.h"
+#include "strt.h"
+#include "ops.h"
+#include "script.h"
+}
+
 #include <iostream>
 #include <fstream>
 
-#include <ampersand/meta.hpp>
+#include "desc.hpp"
 
-extern "C"
-{
-#include "c99.h"
-}
+namespace ap  {
+	desc from_c99();
 
-namespace ap::c99   {
-	class desc	    {
+	class c99		{
 		::obj* m_obj;
+		c99(::obj*) ;
 	public:
-		class context        {
-			friend class desc;
-			::obj* m_obj     ;
-			 context(desc&)  ;
-		public:
-			 context(const context&);
-			 context(context&&)		;
-			~context()				;
-		public:
-			friend std::ostream&  operator<< (std::ostream& , desc::context&);
-			friend std::ostream&  operator<< (std::ostream& , desc::context) ;
-			friend std::ofstream& operator<< (std::ofstream&, desc::context&);
-			friend std::ofstream& operator<< (std::ofstream&, desc::context) ;
-		};
-	public:
-		 desc()			  ;
-		 desc(const desc&);
-		 desc(desc&&)	  ;
-		~desc()			  ;
-	public:
-		context get_context();
-		bool    operator() (type_t   auto par) { return ap_desc_strt  (m_obj, par.m_obj); }
-		bool    operator() (script_t auto par) { return ap_desc_script(m_obj, par.m_obj); }
-		bool    operator() (ops_t    auto par) { return ap_desc_ops   (m_obj, par.m_obj); }
-		bool    operator() (func_t   auto par) { return ap_desc_func  (m_obj, par.m_obj); }
+		 static std::optional<c99> from(desc&);
+		 friend std::ostream& operator << (std::ostream&, c99&);
+		 c99(const c99&);
+		 c99(c99&&)		;
+		~c99()			;
 	};
+
+	std::ostream& operator << (std::ostream&, c99&);
 }
 
 #endif

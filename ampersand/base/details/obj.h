@@ -23,20 +23,9 @@ typedef struct __obj  {
     __obj_trait *trait; 
 }   __obj;
 
-__obj*
-    __obj_init
-        (__alloc*, __obj_trait*, u32_t, va_list);
-
-__obj*
-    __obj_init_as_clone
-        (__obj*);
-
-__obj*
-    __obj_init_as_ref
-        (__obj*);
-
-void
-    __obj_deinit
-        (__obj*);
+__obj* __obj_init         (__alloc*, __obj_trait*, u32_t, va_list);
+__obj* __obj_init_as_clone(__obj*);
+__obj* __obj_init_as_ref  (__obj*);
+void   __obj_deinit       (__obj*);
 
 #endif

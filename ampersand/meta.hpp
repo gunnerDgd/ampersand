@@ -11,21 +11,23 @@
 
 #include "meta/script.hpp"
 
-namespace ap				  {
-	type<std::int8_t>   i8  ();
-	type<std::int16_t>  i16 ();
-	type<std::int32_t>  i32 ();
-	type<std::int64_t>  i64 ();
+namespace ap				      {
+	type<bool>			boolean ();
 
-	type<std::uint8_t>  u8  ();
-	type<std::uint16_t> u16 ();
-	type<std::uint32_t> u32 ();
-	type<std::uint64_t> u64 ();
+	type<std::int8_t>   i8      ();
+	type<std::int16_t>  i16		();
+	type<std::int32_t>  i32		();
+	type<std::int64_t>  i64		();
 
-	type<float>			f32 ();
-	type<double>		f64 ();
+	type<std::uint8_t>  u8		();
+	type<std::uint16_t> u16		();
+	type<std::uint32_t> u32		();
+	type<std::uint64_t> u64		();
 
-	type<void>			none();
+	type<float>			f32		();
+	type<double>		f64		();
+
+	type<void>			none	();
 }
 
 #endif

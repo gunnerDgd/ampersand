@@ -32,28 +32,11 @@ typedef struct   __ap_elem		{
 	}	type;
 }	__ap_elem;
 
-bool_t
-	__ap_elem_init
-		(__ap_elem*, u32_t, va_list);
-
-bool_t
-	__ap_elem_init_as_clone
-		(__ap_elem*, __ap_elem*);
-
-bool_t
-	__ap_elem_init_as_ref
-		(__ap_elem*);
-
-void
-	__ap_elem_deinit
-		(__ap_elem*);
-
-str*
-	__ap_elem_name
-		(__ap_elem*);
-
-u64_t
-	__ap_elem_size
-		();
+bool_t __ap_elem_init		  (__ap_elem*, u32_t, va_list);
+bool_t __ap_elem_init_as_clone(__ap_elem*, __ap_elem*)	  ;
+bool_t __ap_elem_init_as_ref  (__ap_elem*)				  ;
+void   __ap_elem_deinit		  (__ap_elem*)				  ;
+str*   __ap_elem_name		  (__ap_elem*)				  ;
+u64_t  __ap_elem_size		  ()						  ;
 
 #endif

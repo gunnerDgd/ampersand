@@ -65,24 +65,10 @@ typedef struct   __ap_ops	   {
 	list  op_arg;
 }	__ap_ops;
 
-bool_t
-	__ap_ops_init
-		(__ap_ops*, u32_t, va_list);
-
-bool_t
-	__ap_ops_init_as_clone
-		(__ap_ops*, __ap_ops*);
-
-bool_t
-	__ap_ops_init_as_ref
-		(__ap_ops*);
-
-void
-	__ap_ops_deinit
-		(__ap_ops*);
-
-u64_t
-	__ap_ops_size
-		();
+bool_t __ap_ops_init		 (__ap_ops*, u32_t, va_list);
+bool_t __ap_ops_init_as_clone(__ap_ops*, __ap_ops*)		;
+bool_t __ap_ops_init_as_ref  (__ap_ops*)			    ;
+void   __ap_ops_deinit		 (__ap_ops*)				;
+u64_t  __ap_ops_size		 ()							;
 
 #endif

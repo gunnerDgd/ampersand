@@ -10,4 +10,6 @@ namespace ap {
 	type<>:: type(const type<>& par) : m_obj(obj_init_as_ref(par.m_obj))				  {}
 	type<>:: type(type<>&& par)		 : m_obj(obj_init_as_ref(par.m_obj))				  {}
 	type<>::~type()												 	  { obj_deinit(m_obj); }
+
+	
 }

@@ -44,43 +44,9 @@ namespace ap {
 		ref		   = 36
 	};
 
-	template <op O, typename... T> class ops;
+	template <op O, typename... T> class ops   ;
 	class script;
 }
 
-namespace ap::details {
-	template <typename T>					struct type_t			  : std::false_type {};
-	template <typename... T>			    struct type_t<type<T...>> : std::true_type  {};
-
-	template				<typename... T> struct elem_t						  : std::false_type {};
-	template <acc A, stor S, typename... T> struct elem_t<elem<A, S, type<T...>>> : std::true_type  {};
-
-	template <typename T>					struct obj_t			: std::false_type {};
-	template <typename... T>				struct obj_t<obj<T...>> : std::true_type  {};
-
-	template <typename T>					struct val_t		  : std::false_type {};
-	template <std::integral T>				struct val_t<type<T>> : std::true_type  {};
-	template <std::floating_point T>		struct val_t<type<T>> : std::true_type  {};
-
-	template <typename... T>				struct ops_t			   : std::false_type {};
-	template <op O, typename... T>			struct ops_t<ops<O, T...>> : std::true_type  {};
-
-	template <typename T>					struct script_t		    : std::false_type {};
-	template <>								struct script_t<script> : std::true_type  {};
-
-	template <typename T>					struct func_t			  : std::false_type {};
-	template <typename... T>				struct func_t<func<T...>> : std::true_type  {};
-}
-
-namespace ap		  {
-	template <typename T> concept    type_t = details::type_t  <T>::value;
-	template <typename T> concept    elem_t = details::elem_t  <T>::value;
-	template <typename T> concept     obj_t = details::obj_t   <T>::value;
-	template <typename T> concept	  val_t = details::val_t   <T>::value;
-	template <typename T> concept  script_t = details::script_t<T>::value;
-	template <typename T> concept     ops_t = details::ops_t   <T>::value;
-	template <typename T> concept ops_arg_t = ops_t<T> || obj_t<T> || val_t<T>;
-	template <typename T> concept    func_t = details::func_t<T>::value		  ;
-}
 
 #endif

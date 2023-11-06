@@ -4,7 +4,8 @@
 #include <optional>
 #include <concepts>
 
-#include "declare.hpp"
+#include "traits.hpp"
+
 #include "../desc/declare.hpp"
 #include "../details/var.hpp"
 
@@ -17,7 +18,7 @@ extern "C"
 	template <acc A, stor S, typename... T> friend class elem	  ;\
 	template <typename... T>				friend class obj	  ;\
 	template <typename T>					friend class val	  ;\
-											friend class c99::desc;
+											friend class desc;
 
 namespace ap		{
 	template <std::integral T>
@@ -50,7 +51,7 @@ namespace ap		{
 	};
 
 	template <std::floating_point T>
-	class type<T>	{
+	class type<T>				{
 		AP_TYPE_FRIEND
 		::obj* m_obj;
 	public:
@@ -83,7 +84,7 @@ namespace ap		{
 	};
 
 	template <>
-	class type<>	{
+	class type<>			{
 		AP_TYPE_FRIEND
 		::obj* m_obj;
 	public:

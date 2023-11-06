@@ -1,7 +1,7 @@
 #ifndef AMPERSAND_META_OPS_OBJ_HPP
 #define AMPERSAND_META_OPS_OBJ_HPP
 
-#include "../declare.hpp"
+#include "../traits.hpp"
 extern "C"
 {
 #include "../ops.h"

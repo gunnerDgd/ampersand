@@ -1,13 +1,14 @@
 #include "ops.h"
 #include "obj.h"
+#include "script.h"
 
 obj_trait __ap_ops_trait = {
 	.init		   = &__ap_ops_init		    ,
 	.init_as_clone = &__ap_ops_init_as_clone,
 	.init_as_ref   = &__ap_ops_init_as_ref  ,
 	.deinit		   = &__ap_ops_deinit		,
+	.size		   = &__ap_ops_size		    ,
 	.name		   = 0					    ,
-	.size		   = &__ap_ops_size
 };
 
 bool_t
@@ -20,7 +21,10 @@ bool_t
 				obj		  *arg		 = va_arg  (par, obj*);
 				obj_trait *arg_trait = trait_of(arg)	  ;
 
-				if (arg_trait != &__ap_obj_trait && arg_trait != &__ap_ops_trait)
+				if (arg_trait != &__ap_ops_trait    && 
+					arg_trait != &__ap_script_trait && 
+					arg_trait != &__ap_obj_trait
+				)
 					goto __ap_ops_init_failed;
 
 				list_push_back(&par_ops->op_arg, arg);

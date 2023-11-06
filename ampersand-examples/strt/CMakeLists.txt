@@ -6,14 +6,17 @@ target_link_libraries     (ampersand-examples-strt PRIVATE
     ampersand 
     
     ampersand-meta 
-    ampersand-meta-c 
+    ampersand-meta-cpp
     
     build 
-    build-arch 
+    build-arch
+    build-preset
     
     ampersand-desc-c99
-    ampersand-desc-c99-c
+    ampersand-desc-c99-cpp
+    ampersand-desc-c99-details
 
     ampersand-desc
-    ampersand-desc-c
+    ampersand-desc-cpp
+    ampersand-desc-details
 )

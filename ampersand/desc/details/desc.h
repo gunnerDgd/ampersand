@@ -3,20 +3,44 @@
 
 #include <ampersand/base/obj.h>
 
-typedef struct __ap_desc_context			       {
-	bool_t (*strt)  (struct __ap_desc*, obj*, obj*);
-	bool_t (*func)  (struct __ap_desc*, obj*, obj*);
-	bool_t (*ops)   (struct __ap_desc*, obj*, obj*);
-	bool_t (*script)(struct __ap_desc*, obj*, obj*);
-}	__ap_desc_context;
+typedef struct __ap_desc_run {
+		struct				 {
+			bool_t (*all)			 (obj*, obj*)			   ;
+			bool_t (*begin)			 (obj*, str*)			   ;
+			bool_t (*begin_from_cstr)(obj*, const char*, u64_t);
+			bool_t (*elem)			 (obj*, obj*)			   ;
+			bool_t (*end)			 (obj*)					   ;
+		}	strt;
+		struct						     {
+			bool_t (*all)	 (obj*, obj*);
+			bool_t (*arith)  (obj*, obj*);
+			bool_t (*bit)    (obj*, obj*);
+			bool_t (*cmp)    (obj*, obj*);
+			bool_t (*logical)(obj*, obj*);
+			bool_t (*func)	 (obj*, obj*);
+			bool_t (*push)   (obj*, obj*);
+			bool_t (*pop)	 (obj*, obj*);
+			bool_t (*end)	 (obj*)		 ;
+		}	ops;
+
+		struct							   {
+			bool_t (*all)	   (obj*, obj*);
+			bool_t (*ret)	   (obj*, obj*);
+			bool_t (*arg)	   (obj*, obj*);
+			bool_t (*arg_begin)(obj*)	   ;
+			bool_t (*arg_end)  (obj*)	   ;
+		}	func;
+
+		bool_t (*script)(obj*, obj*);
+}		__ap_desc_run;
 
 extern obj_trait __ap_desc_trait;
 typedef struct   __ap_desc		{
-	obj			       head		;
-	obj				  *ctx	    ;
-	obj_trait		  *ctx_trait;
-	__ap_desc_context *ctx_ops  ;
-}	__ap_desc			        ;
+	obj			   head		;
+	__ap_desc_run *run		;
+	obj			  *ctx		;
+	obj_trait	  *ctx_trait;
+}	__ap_desc;
 
 bool_t
 	__ap_desc_init

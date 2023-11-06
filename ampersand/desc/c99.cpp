@@ -2,55 +2,33 @@
 
 extern "C"
 {
-#include "details/desc.h"
-#include "c99/details/ctx.h"
+#include "c99/c99.h"
 }
 
-namespace ap::c99 {
-	desc:: desc()			     : m_obj(obj_init(0, ap_desc_t, 2, c99_ctx_t, c99_desc)) {}
-	desc:: desc(const desc& par) : m_obj(obj_init_as_ref(par.m_obj)) {}
-	desc:: desc(desc&& par)		 : m_obj(obj_init_as_ref(par.m_obj)) {}
-	desc::~desc()								 { obj_deinit(m_obj); }
-
-	desc::context
-		desc::get_context() {
-			return context(*this);
+namespace ap	   {
+	desc
+		from_c99() {
+			return desc(obj_init(0, ap_desc_t, 2, c99_run_t, c99_t));
 	}
 
-	desc::context:: context(desc& par)			: m_obj(obj_init_as_ref(((::__ap_desc*)par.m_obj)->ctx)) {}
-	desc::context:: context(const context& par) : m_obj(obj_init_as_ref(par.m_obj)) {}
-	desc::context:: context(context&& par)		: m_obj(obj_init_as_ref(par.m_obj)) {}
-	desc::context::~context()								    { obj_deinit(m_obj); }
+	std::optional<c99> 
+		c99::from(desc& par) {
+			::obj* ret = ap_desc_context(par.m_obj);
+			if (obj_get_trait(ret) != c99_t)
+				return std::nullopt;
 
-	std::ostream&
-		operator<< (std::ostream& par_os, desc::context& par) {
-			::__c99_ctx* ctx = (::__c99_ctx*)par.m_obj;
-			par_os.write(str_raw_ptr(&ctx->ctx), str_len(&ctx->ctx));
-
-			return par_os;
-	}
-	
-	std::ofstream&
-		operator<< (std::ofstream& par_os, desc::context& par) {
-			::__c99_ctx* ctx = (::__c99_ctx*)par.m_obj;
-			par_os.write(str_raw_ptr(&ctx->ctx), str_len(&ctx->ctx));
-
-			return par_os;
+			return c99(ret);
 	}
 
-	std::ostream&
-		operator<< (std::ostream& par_os, desc::context par) {
-			::__c99_ctx* ctx = (::__c99_ctx*)par.m_obj;
-			par_os.write(str_raw_ptr(&ctx->ctx), str_len(&ctx->ctx));
+	c99:: c99(::obj* par)	  : m_obj(obj_init_as_ref(par))       {}
+	c99:: c99(const c99& par) : m_obj(obj_init_as_ref(par.m_obj)) {}
+	c99:: c99(c99&& par)	  : m_obj(obj_init_as_ref(par.m_obj)) {}
+	c99::~c99()								  { obj_deinit(m_obj); }
 
-			return par_os;
-	}
-	
-	std::ofstream&
-		operator<< (std::ofstream& par_os, desc::context par) {
-			::__c99_ctx* ctx = (::__c99_ctx*)par.m_obj;
-			par_os.write(str_raw_ptr(&ctx->ctx), str_len(&ctx->ctx));
-
+	std::ostream& 
+		operator << (std::ostream& par_os, c99& par) {
+			ptr ret = str_ptr(c99_get_str(par.m_obj));
+			par_os.write((const char*)ptr_raw(ret), str_len(c99_get_str(par.m_obj)));
 			return par_os;
 	}
 }

@@ -3,8 +3,10 @@
 
 #include "../desc.h"
 
-bool_t
-	c99_desc_func
-		(obj*, obj*, obj*);
+bool_t c99_desc_func		  (obj*, obj*);
+bool_t c99_desc_func_ret	  (obj*, obj*);
+bool_t c99_desc_func_arg	  (obj*, obj*);
+bool_t c99_desc_func_arg_begin(obj*);
+bool_t c99_desc_func_arg_end  (obj*);
 
 #endif

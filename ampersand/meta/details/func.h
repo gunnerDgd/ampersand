@@ -15,28 +15,11 @@ typedef struct   __ap_func	    {
 	list			    arg	  ;
 }	__ap_func;
 
-bool_t
-	__ap_func_init
-		(__ap_func*, u32_t, va_list);
-
-bool_t
-	__ap_func_init_as_clone
-		(__ap_func*, __ap_func*);
-
-bool_t
-	__ap_func_init_as_ref
-		(__ap_func*);
-
-void
-	__ap_func_deinit
-		(__ap_func*);
-
-str*
-	__ap_func_name
-		(__ap_func*);
-
-u64_t
-	__ap_func_size
-		();
+bool_t __ap_func_init		  (__ap_func*, u32_t, va_list);
+bool_t __ap_func_init_as_clone(__ap_func*, __ap_func*)	  ;
+bool_t __ap_func_init_as_ref  (__ap_func*)				  ;
+void   __ap_func_deinit		  (__ap_func*)				  ;
+str*   __ap_func_name		  (__ap_func*)				  ;
+u64_t  __ap_func_size		  ()						  ;
 
 #endif
