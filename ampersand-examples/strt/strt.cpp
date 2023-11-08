@@ -19,6 +19,5 @@ int main() {
 		 desc(test_type);
 
 	auto c99 = ap::c99::from(desc).value();
-
 	std::cout << c99 << std::endl;
 }

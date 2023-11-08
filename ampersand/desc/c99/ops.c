@@ -65,8 +65,8 @@ bool_t
 			if (op < ap_ops_add || op > ap_ops_mod_eq)
 				return false_t;
 
-			c99_desc_ops_arg(par_context, it_get(&op_arg)); __c99_desc_ops_arith(par_context, op); it_next(&op_arg);
-			c99_desc_ops_arg(par_context, it_get(&op_arg));
+			c99_desc_ops_arg(par_context, get(op_arg)); __c99_desc_ops_arith(par_context, op); next(op_arg);
+			c99_desc_ops_arg(par_context, get(op_arg));
 
 			return true_t;
 }
@@ -91,8 +91,8 @@ bool_t
 				
 			}
 
-			c99_desc_ops_arg(par_context, it_get(&op_arg));  __c99_desc_ops_bit(par_context, op); it_next(&op_arg);
-			c99_desc_ops_arg(par_context, it_get(&op_arg));
+			c99_desc_ops_arg(par_context, get(op_arg));  __c99_desc_ops_bit(par_context, op); next(op_arg);
+			c99_desc_ops_arg(par_context, get(op_arg));
 
 			return true_t;
 }
@@ -109,8 +109,8 @@ bool_t
 			if (op < ap_ops_gt || op > ap_ops_neq)
 				return false_t;
 
-			c99_desc_ops_arg(par_context, it_get(&op_arg));  __c99_desc_ops_cmp(par_context, op); it_next(&op_arg);
-			c99_desc_ops_arg(par_context, it_get(&op_arg));
+			c99_desc_ops_arg(par_context, get(op_arg));  __c99_desc_ops_cmp(par_context, op); next(op_arg);
+			c99_desc_ops_arg(par_context, get(op_arg));
 
 			return true_t;
 }
@@ -204,7 +204,7 @@ bool_t
 					str_push_back_cstr(c99_get_str(par_context), "."  , 1)				;
 					str_push_back	  (c99_get_str(par_context), name_of(it_get(&elem)));
 					str_push_back_cstr(c99_get_str(par_context), " = ", 3)				;
-					c99_desc_ops_arg  (par_context, it_get(&op_arg))							;
+					c99_desc_ops_arg  (par_context, it_get(&op_arg))					;
 					str_push_back_cstr(c99_get_str(par_context), ",\n", 2)				;
 				}
 
