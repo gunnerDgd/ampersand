@@ -1,5 +1,0 @@
-#ifndef AMPERSAND_DESC_DECLARE_HPP
-#define AMPERSAND_DESC_DECLARE_HPP
-
-
-#endif
