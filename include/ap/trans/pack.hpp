@@ -3,6 +3,8 @@
 
 #include <ap/trans/trans.hpp>
 #include <ap/core/core.hpp>
+
+#include <ap/meta/pack.hpp>
 #include <ap/meta/meta.hpp>
 
 #include <string_view>
@@ -183,7 +185,7 @@ namespace ap::trans                                                    {
                     ((*this)(ap::sub<I>(arg)), ...);
                 }   (std::index_sequence<sizeof...(T)>{});
 
-                pop  ();
+                return pop();
     }
 
     template <typename M, typename Trait>
@@ -195,7 +197,7 @@ namespace ap::trans                                                    {
                     (*this)(pos);
                 }
 
-                pop ();
+                return pop();
     }
 }
 
@@ -303,7 +305,7 @@ namespace ap::trans                                                          {
                     (((*this)(ap::sub<I>(arg))), ...);
                 }   (std::make_index_sequence<sizeof...(T)>{});
 
-                pop  ();
+                return pop();
     }
 
     template <typename Trait>
@@ -315,7 +317,7 @@ namespace ap::trans                                                          {
                     (*this)(pos);
                 }
 
-                pop ();
+                return pop();
     }
 }
 
