@@ -135,8 +135,8 @@ namespace ap::trans                                                             
     template <typename T> void pack<T>::u8 (auto self, str_t name)  { trait::u8 (self, name); }
     template <typename T> void pack<T>::i8 (auto self, str_t name)  { trait::i8 (self, name); }
 
-    template <typename T> auto pack<T>::push(str_t name) { return trait::push (self, name); }
-    template <typename T> auto pack<T>::pop (auto  self) { return trait::pop  (self, self); }
+    template <typename T> auto pack<T>::push(str_t name) { return trait::push (name); }
+    template <typename T> auto pack<T>::pop (auto  self) { return trait::pop  (self); }
 }
 
 namespace ap::trans                                                          {
