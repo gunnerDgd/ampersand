@@ -20,7 +20,7 @@ namespace ap::trans {
         template <ap::opc C, typename T1, typename T2> auto operator()(ap::op<C, T1, T2>) requires is::opc::bit<C>;
         template <ap::opc C, typename T1>              auto operator()(ap::op<C, T1>)     requires is::opc::bit<C>;
 
-        template <ap::opc C, typename T1, typename T2> auto operator()(ap::op<C, T1, T2>) requires C == opc::move;
+        template <ap::opc C, typename T1, typename T2> auto operator()(ap::op<C, T1, T2>) requires (C == opc::move);
         template <ap::opc C, typename T1, typename T2> auto operator()(ap::op<C, T1, T2>) requires is::opc::cmp <C>;
         template <ap::opc C, typename T1, typename T2> auto operator()(ap::op<C, T1, T2>) requires is::opc::ord <C>;
 
