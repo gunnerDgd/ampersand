@@ -1,0 +1,20 @@
+add_library              (
+    ampersand-meta STATIC
+
+    ../../include/ap/meta/ope/num.hpp
+    ../../include/ap/meta/ope/var.hpp
+    ../../include/ap/meta/ope/op.hpp
+    ../../include/ap/meta/ope.hpp
+
+    ../../include/ap/meta/meta.hpp
+    ../../include/ap/meta/pack.hpp
+    ../../include/ap/meta/src.hpp
+    ../../include/ap/meta.hpp
+
+    ope/var.cpp
+    pack.cpp
+    ope.cpp
+    src.cpp
+)
+
+target_link_libraries (ampersand INTERFACE ampersand-meta)
