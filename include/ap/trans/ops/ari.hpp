@@ -1,4 +1,4 @@
-#ifndef AP_TRNAS_ARI_HPP
+#ifndef AP_TRANS_ARI_HPP
 #define AP_TRANS_ARI_HPP
 
 #include <ap/trans/trans.hpp>

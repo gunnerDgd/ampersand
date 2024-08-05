@@ -1,7 +1,6 @@
 #ifndef AP_TRAIT_OP_HPP
 #define AP_TRAIT_OP_HPP
 
-#include <ap/core/core.hpp>
 #include <ap/trait/opc.hpp>
 #include <type_traits>
 
