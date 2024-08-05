@@ -183,7 +183,7 @@ namespace ap::trans                                                    {
                 push (ap::name (arg));
                 [this, &arg] <std::size_t... I> (std::index_sequence<I...>) {
                     ((*this)(ap::sub<I>(arg)), ...);
-                }   (std::index_sequence<sizeof...(T)>{});
+                }   (std::make_index_sequence<sizeof...(T)>{});
 
                 return pop();
     }
