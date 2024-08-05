@@ -144,9 +144,9 @@ namespace ap::trans                                                          {
     template <typename N, typename... T>
     auto
         pack<Trait>::operator()
-            (ap::pack<N, T...> & arg)                                       {
+            (ap::pack<N, T...> & arg)                                             {
                 auto ret = push (ap::name (arg));
-                [this, &arg] <std::size_t... I> (std::index_sequence<I...>) {
+                [this, &ret, &arg] <std::size_t... I> (std::index_sequence<I...>) {
                     (((*this)(ret, ap::sub<I>(arg))), ...);
                 }   (std::make_index_sequence<sizeof...(T)>{});
 
