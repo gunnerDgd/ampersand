@@ -27,6 +27,8 @@ namespace ap::trans {
         auto operator ()(is::var_t           auto self) { return ap::name(self); }
         auto operator ()(std::floating_point auto self) { return self; }
         auto operator ()(std::integral       auto self) { return self; }
+
+        ops (T, Arg...) : Arg()... {}
     };
 
     template <typename T, typename... Arg> ops(T, Arg...) -> ops<T, Arg...>;
@@ -41,11 +43,11 @@ namespace ap::trans                                                             
                 auto ops = T::ops();
 
                 T::self (ops, (*this)(op.self));
-                if constexpr (C == opc::add_eq) add_eq (ops);
-                if constexpr (C == opc::sub_eq) sub_eq (ops);
-                if constexpr (C == opc::mul_eq) mul_eq (ops);
-                if constexpr (C == opc::div_eq) div_eq (ops);
-                if constexpr (C == opc::mod_eq) mod_eq (ops);
+                if constexpr (C == opc::add_eq) this->add_eq (ops);
+                if constexpr (C == opc::sub_eq) this->sub_eq (ops);
+                if constexpr (C == opc::mul_eq) this->mul_eq (ops);
+                if constexpr (C == opc::div_eq) this->div_eq (ops);
+                if constexpr (C == opc::mod_eq) this->mod_eq (ops);
 
                 T::arg (ops, (*this) (op.arg));
                 return  ops;
@@ -59,9 +61,9 @@ namespace ap::trans                                                             
                 auto ops = T::ops();
 
                 T::self(ops, (*this)(op.self));
-                if constexpr (C == opc::bit_and_eq) bit_and_eq(ops);
-                if constexpr (C == opc::bit_or_eq)  bit_or_eq (ops);
-                if constexpr (C == opc::bit_xor_eq) bit_xor_eq(ops);
+                if constexpr (C == opc::bit_and_eq) this->bit_and_eq(ops);
+                if constexpr (C == opc::bit_or_eq)  this->bit_or_eq (ops);
+                if constexpr (C == opc::bit_xor_eq) this->bit_xor_eq(ops);
                 
                 T::arg(ops, (*this) (op.arg));
                 return ops;
@@ -75,11 +77,11 @@ namespace ap::trans                                                             
                 auto ops = T::ops();
 
                 T::self(ops, (*this)(op.self));
-                if constexpr (C == opc::add) add (ops);
-                if constexpr (C == opc::sub) sub (ops);
-                if constexpr (C == opc::mul) mul (ops);
-                if constexpr (C == opc::div) div (ops);
-                if constexpr (C == opc::mod) mod (ops);
+                if constexpr (C == opc::add) this->add (ops);
+                if constexpr (C == opc::sub) this->sub (ops);
+                if constexpr (C == opc::mul) this->mul (ops);
+                if constexpr (C == opc::div) this->div (ops);
+                if constexpr (C == opc::mod) this->mod (ops);
 
                 T::arg(ops, (*this) (op.arg));
                 return ops;
@@ -93,11 +95,11 @@ namespace ap::trans                                                             
                 auto ops = T::ops();
 
                 T::self(ops, (*this)(op.self));
-                if constexpr (C == opc::bit_and) bit_and_eq(ops);
-                if constexpr (C == opc::bit_or)  bit_or_eq (ops);
-                if constexpr (C == opc::bit_xor) bit_xor_eq(ops);
-                if constexpr (C == opc::bit_shl) bit_xor_eq(ops);
-                if constexpr (C == opc::bit_shr) bit_xor_eq(ops);
+                if constexpr (C == opc::bit_and) this->bit_and_eq(ops);
+                if constexpr (C == opc::bit_or)  this->bit_or_eq (ops);
+                if constexpr (C == opc::bit_xor) this->bit_xor_eq(ops);
+                if constexpr (C == opc::bit_shl) this->bit_xor_eq(ops);
+                if constexpr (C == opc::bit_shr) this->bit_xor_eq(ops);
 
                 T::arg (ops, (*this) (op.arg));
                 return  ops;
@@ -111,7 +113,7 @@ namespace ap::trans                                                             
                 auto ops = T::ops();
 
                 T::self(ops, (*this)(op.self));
-                if constexpr (C == opc::bit_not) bit_not(ops);
+                if constexpr (C == opc::bit_not) this->bit_not(ops);
     }
 
     template <typename T, typename... Arg>
@@ -122,10 +124,10 @@ namespace ap::trans                                                             
                 auto ops = T::ops();
 
                 T::self(ops, (*this)(op.self));
-                if constexpr (C == opc::ord_ge) ord_ge(ops);
-                if constexpr (C == opc::ord_gt) ord_gt(ops);
-                if constexpr (C == opc::ord_le) ord_le(ops);
-                if constexpr (C == opc::ord_lt) ord_lt(ops);
+                if constexpr (C == opc::ord_ge) this->ord_ge(ops);
+                if constexpr (C == opc::ord_gt) this->ord_gt(ops);
+                if constexpr (C == opc::ord_le) this->ord_le(ops);
+                if constexpr (C == opc::ord_lt) this->ord_lt(ops);
 
                 T::arg (ops, (*this) (op.arg));
                 return  ops;
@@ -139,8 +141,8 @@ namespace ap::trans                                                             
                 auto ops = T::ops();
 
                 T::self(ops, (*this)(op.self));
-                if constexpr (C == opc::cmp_eq) cmp_eq(ops);
-                if constexpr (C == opc::cmp_ne) cmp_ne(ops);
+                if constexpr (C == opc::cmp_eq) this->cmp_eq(ops);
+                if constexpr (C == opc::cmp_ne) this->cmp_ne(ops);
 
                 T::arg (ops, (*this) (op.arg));
                 return  ops;
@@ -154,7 +156,7 @@ namespace ap::trans                                                             
                 auto ops = T::ops();
 
                 T::self(ops, (*this)(op.self));
-                mov    (ops);
+                this->mov    (ops);
 
                 T::arg (ops, (*this) (op.arg));
                 return  ops;
