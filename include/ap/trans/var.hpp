@@ -3,6 +3,8 @@
 
 #include <ap/trans/trans.hpp>
 #include <ap/core/core.hpp>
+
+#include <ap/meta/pack.hpp>
 #include <ap/meta/meta.hpp>
 
 #include <string_view>
