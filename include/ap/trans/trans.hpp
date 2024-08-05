@@ -1,5 +1,5 @@
-#ifndef AP_TRANS_HPP
-#define AP_TRANS_HPP
+#ifndef AP_TRANS_TRANS_HPP
+#define AP_TRANS_TRANS_HPP
 
 namespace ap::trans                       {
     template <typename... T> class boolean;

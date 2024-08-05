@@ -14,6 +14,7 @@ add_library                             (
     ../../include/ap/trans/var.hpp
 
     ../../include/ap/trans/trans.hpp
+    ../../include/ap/trans.hpp
 )
 
 set_target_properties(ampersand-trans PROPERTIES LINKER_LANGUAGE CXX)
