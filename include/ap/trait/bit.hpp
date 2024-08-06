@@ -10,8 +10,8 @@
 #include <concepts>
 
 
-namespace ap                                    {
-    template <ap::opc C, typename... T> class op;
+namespace ap                                     {
+    template <ap::opc C, typename... T> struct op;
 }
 
 namespace ap::is::details                                   {
