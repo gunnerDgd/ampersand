@@ -1,6 +1,6 @@
 #include "../../include/ap/core/float.hpp"
 
-namespace ap {
-    f32_t f32;
-    f64_t f64;
+namespace ap          {
+    types::f32_t f32_t;
+    types::f64_t f64_t;
 }
