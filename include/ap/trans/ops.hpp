@@ -95,11 +95,11 @@ namespace ap::trans                                                             
                 auto ops = T::ops();
 
                 T::self(ops, (*this)(op.self));
-                if constexpr (C == opc::bit_and) this->bit_and_eq(ops);
-                if constexpr (C == opc::bit_or)  this->bit_or_eq (ops);
-                if constexpr (C == opc::bit_xor) this->bit_xor_eq(ops);
-                if constexpr (C == opc::bit_shl) this->bit_xor_eq(ops);
-                if constexpr (C == opc::bit_shr) this->bit_xor_eq(ops);
+                if constexpr (C == opc::bit_and) this->bit_and(ops);
+                if constexpr (C == opc::bit_or)  this->bit_or (ops);
+                if constexpr (C == opc::bit_xor) this->bit_xor(ops);
+                if constexpr (C == opc::bit_shl) this->bit_shl(ops);
+                if constexpr (C == opc::bit_shr) this->bit_shr(ops);
 
                 T::arg (ops, (*this) (op.arg));
                 return  ops;
