@@ -43,7 +43,8 @@ namespace ap                                            {
     template <std::size_t I, typename... T> auto sub (const ap::pack<T...>&);
 }
 
-namespace ap                          {
+namespace ap                           {
+    template <typename T> class boolean;
     template <typename T> class ari_eq;
     template <typename T> class bit_eq;
     template <typename T> class ari;

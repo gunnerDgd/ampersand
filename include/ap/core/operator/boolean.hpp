@@ -1,13 +1,13 @@
 #ifndef AP_OPERATOR_BOOLEAN_HPP
 #define AP_OPERATOR_BOOLEAN_HPP
 
-#include "ap/trait/opc.hpp"
+#include <ap/trait/opc.hpp>
 
 namespace ap                                     {
     template <ap::opc C, typename... T> struct op;
 }
 
-namespace ap {
+namespace ap                              {
     template <typename T>
     class boolean                         {
         template <typename... F> class var;
