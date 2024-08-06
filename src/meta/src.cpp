@@ -1,8 +1,10 @@
 #include <ap/meta/meta.hpp>
 
+#include <ap/meta/ope/op.hpp>
 #include <ap/meta/pack.hpp>
 #include <ap/meta/src.hpp>
 #include <ap/meta/ope.hpp>
+#include <ap/meta/fn.hpp>
 
 #include <stack>
 
@@ -30,10 +32,9 @@ namespace ap::meta                                  {
     }
 
     void
-        src::push
-            (ap::meta::src src)                     {
-                auto& ret = ap::meta::builtin::scope;
-                ret.push (meta::src {});
+        src::push()                             {
+            auto& ret = ap::meta::builtin::scope;
+            ret.push (meta::src {});
     }
 
     void
@@ -77,28 +78,38 @@ namespace ap::meta                                  {
                 
                 ret.push_back (op);
     }
+
+    void 
+        src::push
+            (ap::meta::fn fn)                       {
+                auto& src = ap::meta::builtin::scope;
+                if (src.empty()) return;
+
+                auto& cur = src.top();
+                cur.fun.insert({ ap::meta::name(fn), fn});
+    }
 }
 
 
-namespace ap::meta {
-    auto
+namespace ap::meta                              {
+    std::optional<src>
         src::pop ()                             {
             auto &src = ap::meta::builtin::scope;
 
-            if (src.empty()) return std::optional <meta::src> { std::nullopt };
-            auto &ret = src.top();
+            if (src.empty()) return std::nullopt;
+            auto ret = src.top();
             src.pop ();
 
-            return std::optional <meta::src> { ret };
+            return ret;
     }
 
-    auto
+    std::optional<src>
         src::capture()                          {
             auto &src = ap::meta::builtin::scope;
 
-            if (src.empty()) return std::optional <meta::src> { std::nullopt };
+            if (src.empty()) return std::nullopt;
             auto &ret = src.top();
 
-            return std::optional<meta::src> { ret };
+            return ret;
     }
 }
