@@ -4,5 +4,6 @@
 #include "meta/pack.hpp"
 #include "meta/src.hpp"
 #include "meta/ope.hpp"
+#include "meta/fn.hpp"
 
 #endif
