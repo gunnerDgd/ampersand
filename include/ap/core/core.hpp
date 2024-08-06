@@ -27,6 +27,7 @@ namespace ap                                 {
 
     template <typename... T> class pack;
     template <typename... T> class var;
+    template <typename... T> class fn;
 }
 
 namespace ap                                            {
@@ -34,6 +35,7 @@ namespace ap                                            {
     template <is::pack_t T> auto type(const ap::var<T>&);
 
     template <typename... T> auto name(const ap::pack<T...>&);
+    template <typename... T> auto name(const ap::fn  <T...>&);
     template <is::pack_t T>  auto name(const ap::var<T>&);
     template <is::num_t T>   auto name(const ap::var<T>&);
     
@@ -41,6 +43,7 @@ namespace ap                                            {
     template <is::pack_t P, typename T>     auto self(const ap::var<ap::var<P>, ap::var<T>>&);
     template <std::size_t I, is::pack_t  T> auto sub (const ap::var<T>&);
     template <std::size_t I, typename... T> auto sub (const ap::pack<T...>&);
+    template <std::size_t I, typename... T> auto arg (const ap::fn  <T...>&);
 }
 
 namespace ap                           {
