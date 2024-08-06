@@ -11,6 +11,7 @@ add_library                           (
     ../include/ap/trait/var.hpp
     ../include/ap/trait/type.hpp
     ../include/ap/trait/pack.hpp
+    ../include/ap/trait/arg.hpp
 
     ../include/ap/trait/opc.hpp
     ../include/ap/trait/op.hpp
@@ -20,6 +21,7 @@ add_library                           (
     ../include/ap/trait/bit.hpp
     ../include/ap/trait/ord.hpp
     ../include/ap/trait/cmp.hpp
+    ../include/ap/trait/move.hpp
 
     ../include/ap/trait.hpp
 )

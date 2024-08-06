@@ -35,10 +35,11 @@ add_library                         (
     ../../include/ap/core/core.hpp
     ../../include/ap/core.hpp
 
-
+    ops/call.cpp
     boolean.cpp
     float.cpp
     int.cpp
+    fn.cpp
 )
 
 set_target_properties (ampersand-core-operator PROPERTIES LINKER_LANGUAGE CXX)
