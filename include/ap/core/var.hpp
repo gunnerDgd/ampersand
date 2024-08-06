@@ -1,6 +1,10 @@
 #ifndef AP_VAR_HPP
 #define AP_VAR_HPP
 
+#include <ap/core/operator/boolean.hpp>
+#include <ap/core/operator/ord.hpp>
+#include <ap/core/operator/cmp.hpp>
+
 #include <ap/core/operator/move.hpp>
 #include <ap/core/operator/ari.hpp>
 #include <ap/core/operator/bit.hpp>
@@ -21,13 +25,18 @@ namespace ap                          {
 
     template <is::int_t T>
     class var<T> 
-        : public ari_eq<var<T>>,
-          public ari   <var<T>>,
+        : public ari_eq <var<T>>,
+          public ari    <var<T>>,
     
-          public bit_eq<var<T>>,
-          public bit   <var<T>>,
+          public bit_eq <var<T>>,
+          public bit    <var<T>>,
     
-          public move  <var<T>>     {
+          public move   <var<T>>,
+          
+          public boolean<var<T>>,
+          public cmp    <var<T>>,
+          public ord    <var<T>>
+                                    {
         using str = std::string_view;
 
         template <is::num_t V> friend auto type(const ap::var<V>&);
@@ -42,6 +51,10 @@ namespace ap                          {
               bit    <var <T>> (*this),
 
               move   <var <T>> (*this),
+              
+              boolean<var <T>> (*this),
+              cmp    <var <T>> (*this),
+              ord    <var <T>> (*this),
 
               name             (name)
         {
@@ -52,10 +65,16 @@ namespace ap                          {
 
     template <is::float_t T>
     class var<T> 
-        : public ari_eq<var<T>>,
-          public ari   <var<T>>,
+        : public ari_eq <var<T>>,
+          public ari    <var<T>>,
                     
-          public move  <var<T>>     {
+          public move   <var<T>>,
+
+          public boolean<var<T>>,
+          public cmp    <var<T>>,
+          public ord    <var<T>>
+
+                                    {
         using str = std::string_view;
 
         template <is::num_t V> friend auto type(const ap::var<V>&);
@@ -67,6 +86,10 @@ namespace ap                          {
               ari    <var <T>> (*this),
 
               move   <var <T>> (*this),
+
+              boolean<var <T>> (*this),
+              cmp    <var <T>> (*this),
+              ord    <var <T>> (*this),
 
               name             (name)
         {
