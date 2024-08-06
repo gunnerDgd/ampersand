@@ -10,12 +10,12 @@ namespace ap                                {
     template <opc C, can::cmp T, can::cmp U>
         requires is::opc::cmp<C>
     struct op<C, T, U>
-        : public cmp <op <C, T, U>> {
+        : public boolean <op <C, T, U>> {
             T self;
             U arg;
 
             op (T self, U arg)
-                : cmp <op <C, T, U>> (*this),
+                : boolean <op <C, T, U>> (*this),
 
                   self (self),
                   arg  (arg)
