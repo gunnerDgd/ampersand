@@ -72,21 +72,21 @@ namespace ap::trans                       {
     template <is::num_t V>
     auto
         var<T>::operator()
-            (ap::var<V>& var)                                                    {
-                if constexpr (std::same_as<V, f64_t>) return f64 (ap::name (var));
-                if constexpr (std::same_as<V, f32_t>) return f32 (ap::name (var));
+            (ap::var<V>& var)                                                               {
+                if constexpr (std::same_as<V, ap::types::f64_t>) return f64 (ap::name (var));
+                if constexpr (std::same_as<V, ap::types::f32_t>) return f32 (ap::name (var));
 
-                if constexpr (std::same_as<V, u64_t>) return u64 (ap::name (var));
-                if constexpr (std::same_as<V, i64_t>) return i64 (ap::name (var));
+                if constexpr (std::same_as<V, ap::types::u64_t>) return u64 (ap::name (var));
+                if constexpr (std::same_as<V, ap::types::i64_t>) return i64 (ap::name (var));
 
-                if constexpr (std::same_as<V, u32_t>) return u32 (ap::name (var));
-                if constexpr (std::same_as<V, i32_t>) return i32 (ap::name (var));
+                if constexpr (std::same_as<V, ap::types::u32_t>) return u32 (ap::name (var));
+                if constexpr (std::same_as<V, ap::types::i32_t>) return i32 (ap::name (var));
 
-                if constexpr (std::same_as<V, u16_t>) return u16 (ap::name (var));
-                if constexpr (std::same_as<V, i16_t>) return i16 (ap::name (var));
+                if constexpr (std::same_as<V, ap::types::u16_t>) return u16 (ap::name (var));
+                if constexpr (std::same_as<V, ap::types::i16_t>) return i16 (ap::name (var));
 
-                if constexpr (std::same_as<V, u8_t>)  return u8  (ap::name (var));
-                if constexpr (std::same_as<V, i8_t>)  return i8  (ap::name (var));
+                if constexpr (std::same_as<V, ap::types::u8_t>)  return u8  (ap::name (var));
+                if constexpr (std::same_as<V, ap::types::i8_t>)  return i8  (ap::name (var));
     }
 
     template <typename T>
