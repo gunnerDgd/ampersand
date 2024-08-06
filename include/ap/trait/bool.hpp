@@ -3,13 +3,13 @@
 
 #include <type_traits>
 
-namespace ap     {
+namespace ap::types {
     struct bool_t;
 }
 
-namespace ap::is::details                                               {
-    template <typename T> struct bool_t             : std::false_type {};
-    template <>           struct bool_t<ap::bool_t> : std::false_type {};
+namespace ap::is::details                                                      {
+    template <typename T> struct bool_t                    : std::false_type {};
+    template <>           struct bool_t<ap::types::bool_t> : std::true_type  {};
 }
 
 namespace ap::is {

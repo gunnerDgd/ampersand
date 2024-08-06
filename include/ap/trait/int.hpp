@@ -3,7 +3,7 @@
 
 #include <type_traits>
 
-namespace ap    {
+namespace ap::types {
     struct i64_t;
     struct u64_t;
 
@@ -20,136 +20,22 @@ namespace ap    {
     struct f64_t;
 }
 
-namespace ap::is::details                                                       {
-    template <typename T> struct int_t  { static constexpr bool value = false; };
+namespace ap::is::details                                         {
+    template <typename T> struct int_t : std::false_type {};
 
-    template <> struct int_t<ap::i8_t>  { static constexpr bool value = true; };
-    template <> struct int_t<ap::i16_t> { static constexpr bool value = true; };
-    template <> struct int_t<ap::i32_t> { static constexpr bool value = true; };
-    template <> struct int_t<ap::i64_t> { static constexpr bool value = true; };
+    template <> struct int_t<ap::types::i8_t>  : std::true_type {};
+    template <> struct int_t<ap::types::i16_t> : std::true_type {};
+    template <> struct int_t<ap::types::i32_t> : std::true_type {};
+    template <> struct int_t<ap::types::i64_t> : std::true_type {};
 
-    template <> struct int_t<ap::u8_t>  { static constexpr bool value = true; };
-    template <> struct int_t<ap::u16_t> { static constexpr bool value = true; };
-    template <> struct int_t<ap::u32_t> { static constexpr bool value = true; };
-    template <> struct int_t<ap::u64_t> { static constexpr bool value = true; };
+    template <> struct int_t<ap::types::u8_t>  : std::true_type {};
+    template <> struct int_t<ap::types::u16_t> : std::true_type {};
+    template <> struct int_t<ap::types::u32_t> : std::true_type {};
+    template <> struct int_t<ap::types::u64_t> : std::true_type {};
 }
 
 namespace ap::is                                                  {
     template <typename T> concept int_t = details::int_t<T>::value;
-}
-
-namespace std                                                                       {
-    template <> struct common_type<ap::i64_t, ap::f64_t> { using type = ap::f64_t; };
-    template <> struct common_type<ap::i64_t, ap::f32_t> { using type = ap::f32_t; };
-
-    template <> struct common_type<ap::i64_t, ap::i64_t> { using type = ap::i64_t; };
-    template <> struct common_type<ap::i64_t, ap::i32_t> { using type = ap::i64_t; };
-    template <> struct common_type<ap::i64_t, ap::i16_t> { using type = ap::i64_t; };
-    template <> struct common_type<ap::i64_t, ap::i8_t>  { using type = ap::i64_t; };
-
-    template <> struct common_type<ap::i64_t, ap::u64_t> { using type = ap::u64_t; };
-    template <> struct common_type<ap::i64_t, ap::u32_t> { using type = ap::i64_t; };
-    template <> struct common_type<ap::i64_t, ap::u16_t> { using type = ap::i64_t; };
-    template <> struct common_type<ap::i64_t, ap::u8_t>  { using type = ap::i64_t; };
-
-
-    template <> struct common_type<ap::i32_t, ap::f64_t> { using type = ap::f64_t; };
-    template <> struct common_type<ap::i32_t, ap::f32_t> { using type = ap::f32_t; };
-
-    template <> struct common_type<ap::i32_t, ap::i64_t> { using type = ap::i64_t; };
-    template <> struct common_type<ap::i32_t, ap::i32_t> { using type = ap::i32_t; };
-    template <> struct common_type<ap::i32_t, ap::i16_t> { using type = ap::i32_t; };
-    template <> struct common_type<ap::i32_t, ap::i8_t>  { using type = ap::i32_t; };
-
-    template <> struct common_type<ap::i32_t, ap::u64_t> { using type = ap::u64_t; };
-    template <> struct common_type<ap::i32_t, ap::u32_t> { using type = ap::u32_t; };
-    template <> struct common_type<ap::i32_t, ap::u16_t> { using type = ap::i32_t; };
-    template <> struct common_type<ap::i32_t, ap::u8_t>  { using type = ap::i32_t; };
-
-
-    template <> struct common_type<ap::i16_t, ap::f64_t> { using type = ap::f64_t; };
-    template <> struct common_type<ap::i16_t, ap::f32_t> { using type = ap::f32_t; };
-
-    template <> struct common_type<ap::i16_t, ap::i64_t> { using type = ap::i64_t; };
-    template <> struct common_type<ap::i16_t, ap::i32_t> { using type = ap::i32_t; };
-    template <> struct common_type<ap::i16_t, ap::i16_t> { using type = ap::i16_t; };
-    template <> struct common_type<ap::i16_t, ap::i8_t>  { using type = ap::i16_t; };
-
-    template <> struct common_type<ap::i16_t, ap::u64_t> { using type = ap::u64_t; };
-    template <> struct common_type<ap::i16_t, ap::u32_t> { using type = ap::u32_t; };
-    template <> struct common_type<ap::i16_t, ap::u16_t> { using type = ap::u16_t; };
-    template <> struct common_type<ap::i16_t, ap::u8_t>  { using type = ap::i16_t; };
-
-
-    template <> struct common_type<ap::i8_t, ap::f64_t> { using type = ap::f64_t; };
-    template <> struct common_type<ap::i8_t, ap::f32_t> { using type = ap::f32_t; };
-
-    template <> struct common_type<ap::i8_t, ap::i64_t> { using type = ap::i64_t; };
-    template <> struct common_type<ap::i8_t, ap::i32_t> { using type = ap::i32_t; };
-    template <> struct common_type<ap::i8_t, ap::i16_t> { using type = ap::i16_t; };
-    template <> struct common_type<ap::i8_t, ap::i8_t>  { using type = ap::i8_t; };
-
-    template <> struct common_type<ap::i8_t, ap::u64_t> { using type = ap::u64_t; };
-    template <> struct common_type<ap::i8_t, ap::u32_t> { using type = ap::u32_t; };
-    template <> struct common_type<ap::i8_t, ap::u16_t> { using type = ap::u16_t; };
-    template <> struct common_type<ap::i8_t, ap::u8_t>  { using type = ap::u8_t; };
-}
-
-namespace std                                                                       {
-    template <> struct common_type<ap::u64_t, ap::f64_t> { using type = ap::f64_t; };
-    template <> struct common_type<ap::u64_t, ap::f32_t> { using type = ap::f32_t; };
-
-    template <> struct common_type<ap::u64_t, ap::i64_t> { using type = ap::u64_t; };
-    template <> struct common_type<ap::u64_t, ap::i32_t> { using type = ap::u64_t; };
-    template <> struct common_type<ap::u64_t, ap::i16_t> { using type = ap::u64_t; };
-    template <> struct common_type<ap::u64_t, ap::i8_t>  { using type = ap::u64_t; };
-
-    template <> struct common_type<ap::u64_t, ap::u64_t> { using type = ap::u64_t; };
-    template <> struct common_type<ap::u64_t, ap::u32_t> { using type = ap::u64_t; };
-    template <> struct common_type<ap::u64_t, ap::u16_t> { using type = ap::u64_t; };
-    template <> struct common_type<ap::u64_t, ap::u8_t>  { using type = ap::u64_t; };
-
-
-    template <> struct common_type<ap::u32_t, ap::f64_t> { using type = ap::f64_t; };
-    template <> struct common_type<ap::u32_t, ap::f32_t> { using type = ap::f32_t; };
-
-    template <> struct common_type<ap::u32_t, ap::i64_t> { using type = ap::i64_t; };
-    template <> struct common_type<ap::u32_t, ap::i32_t> { using type = ap::u32_t; };
-    template <> struct common_type<ap::u32_t, ap::i16_t> { using type = ap::u32_t; };
-    template <> struct common_type<ap::u32_t, ap::i8_t>  { using type = ap::u32_t; };
-
-    template <> struct common_type<ap::u32_t, ap::u64_t> { using type = ap::u64_t; };
-    template <> struct common_type<ap::u32_t, ap::u32_t> { using type = ap::u32_t; };
-    template <> struct common_type<ap::u32_t, ap::u16_t> { using type = ap::u32_t; };
-    template <> struct common_type<ap::u32_t, ap::u8_t>  { using type = ap::u32_t; };
-
-
-    template <> struct common_type<ap::u16_t, ap::f64_t> { using type = ap::f64_t; };
-    template <> struct common_type<ap::u16_t, ap::f32_t> { using type = ap::f32_t; };
-
-    template <> struct common_type<ap::u16_t, ap::i64_t> { using type = ap::i64_t; };
-    template <> struct common_type<ap::u16_t, ap::i32_t> { using type = ap::i32_t; };
-    template <> struct common_type<ap::u16_t, ap::i16_t> { using type = ap::u16_t; };
-    template <> struct common_type<ap::u16_t, ap::i8_t>  { using type = ap::u16_t; };
-
-    template <> struct common_type<ap::u16_t, ap::u64_t> { using type = ap::u64_t; };
-    template <> struct common_type<ap::u16_t, ap::u32_t> { using type = ap::u32_t; };
-    template <> struct common_type<ap::u16_t, ap::u16_t> { using type = ap::u16_t; };
-    template <> struct common_type<ap::u16_t, ap::u8_t>  { using type = ap::u16_t; };
-
-
-    template <> struct common_type<ap::u8_t, ap::f64_t> { using type = ap::f64_t; };
-    template <> struct common_type<ap::u8_t, ap::f32_t> { using type = ap::f32_t; };
-
-    template <> struct common_type<ap::u8_t, ap::i64_t> { using type = ap::i64_t; };
-    template <> struct common_type<ap::u8_t, ap::i32_t> { using type = ap::i32_t; };
-    template <> struct common_type<ap::u8_t, ap::i16_t> { using type = ap::i16_t; };
-    template <> struct common_type<ap::u8_t, ap::i8_t>  { using type = ap::u8_t; };
-
-    template <> struct common_type<ap::u8_t, ap::u64_t> { using type = ap::u64_t; };
-    template <> struct common_type<ap::u8_t, ap::u32_t> { using type = ap::u32_t; };
-    template <> struct common_type<ap::u8_t, ap::u16_t> { using type = ap::u16_t; };
-    template <> struct common_type<ap::u8_t, ap::u8_t>  { using type = ap::u8_t; };
 }
 
 #endif

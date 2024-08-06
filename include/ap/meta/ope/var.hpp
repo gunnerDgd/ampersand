@@ -50,18 +50,18 @@ namespace ap::meta                     {
             auto  self = ap::self (var) ;
             this->self = ap::name (self);
 
-            if constexpr (std::same_as<U, ap::i64_t>) idx = type_id::i64;
-            if constexpr (std::same_as<U, ap::i32_t>) idx = type_id::i32;
-            if constexpr (std::same_as<U, ap::i16_t>) idx = type_id::i16;
-            if constexpr (std::same_as<U, ap::i8_t>)  idx = type_id::i8;
+            if constexpr (std::same_as<U, ap::types::i64_t>) idx = type_id::i64;
+            if constexpr (std::same_as<U, ap::types::i32_t>) idx = type_id::i32;
+            if constexpr (std::same_as<U, ap::types::i16_t>) idx = type_id::i16;
+            if constexpr (std::same_as<U, ap::types::i8_t>)  idx = type_id::i8;
 
-            if constexpr (std::same_as<U, ap::u64_t>) idx = type_id::u64;
-            if constexpr (std::same_as<U, ap::u32_t>) idx = type_id::u32;
-            if constexpr (std::same_as<U, ap::u16_t>) idx = type_id::u16;
-            if constexpr (std::same_as<U, ap::u8_t>)  idx = type_id::i8;
+            if constexpr (std::same_as<U, ap::types::u64_t>) idx = type_id::u64;
+            if constexpr (std::same_as<U, ap::types::u32_t>) idx = type_id::u32;
+            if constexpr (std::same_as<U, ap::types::u16_t>) idx = type_id::u16;
+            if constexpr (std::same_as<U, ap::types::u8_t>)  idx = type_id::i8;
 
-            if constexpr (std::same_as<U, ap::f64_t>) idx = type_id::f64;
-            if constexpr (std::same_as<U, ap::f32_t>) idx = type_id::f32;
+            if constexpr (std::same_as<U, ap::types::f64_t>) idx = type_id::f64;
+            if constexpr (std::same_as<U, ap::types::f32_t>) idx = type_id::f32;
     }
 
     template <is::pack_t T>
@@ -75,18 +75,18 @@ namespace ap::meta                     {
     template <is::num_t T>
     var::var(ap::var<T> var)
         : name(ap::name(var))                                           {
-            if constexpr (std::same_as<T, ap::i64_t>) idx = type_id::i64;
-            if constexpr (std::same_as<T, ap::i32_t>) idx = type_id::i32;
-            if constexpr (std::same_as<T, ap::i16_t>) idx = type_id::i16;
-            if constexpr (std::same_as<T, ap::i8_t>)  idx = type_id::i8;
+            if constexpr (std::same_as<T, ap::types::i64_t>) idx = type_id::i64;
+            if constexpr (std::same_as<T, ap::types::i32_t>) idx = type_id::i32;
+            if constexpr (std::same_as<T, ap::types::i16_t>) idx = type_id::i16;
+            if constexpr (std::same_as<T, ap::types::i8_t>)  idx = type_id::i8;
 
-            if constexpr (std::same_as<T, ap::u64_t>) idx = type_id::u64;
-            if constexpr (std::same_as<T, ap::u32_t>) idx = type_id::u32;
-            if constexpr (std::same_as<T, ap::u16_t>) idx = type_id::u16;
-            if constexpr (std::same_as<T, ap::u8_t>)  idx = type_id::i8;
+            if constexpr (std::same_as<T, ap::types::u64_t>) idx = type_id::u64;
+            if constexpr (std::same_as<T, ap::types::u32_t>) idx = type_id::u32;
+            if constexpr (std::same_as<T, ap::types::u16_t>) idx = type_id::u16;
+            if constexpr (std::same_as<T, ap::types::u8_t>)  idx = type_id::i8;
 
-            if constexpr (std::same_as<T, ap::f64_t>) idx = type_id::f64;
-            if constexpr (std::same_as<T, ap::f32_t>) idx = type_id::f32;
+            if constexpr (std::same_as<T, ap::types::f64_t>) idx = type_id::f64;
+            if constexpr (std::same_as<T, ap::types::f32_t>) idx = type_id::f32;
     }
 }
 
