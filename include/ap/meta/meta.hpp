@@ -13,7 +13,8 @@ namespace ap::meta                     {
         u8 , i8 ,
 
         f64, f32,
-        pack
+        pack,
+        none
     };
 }
 
@@ -24,6 +25,7 @@ namespace ap::meta {
     class num;
     class ope;
     class op;
+    class fn;
 }
 
 namespace ap::meta                                     {
