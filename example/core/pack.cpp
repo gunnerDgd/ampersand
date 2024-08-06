@@ -7,10 +7,14 @@ struct MyPack                             {
     static auto name() { return "MyPack"; }
 };
 
-int main() {
-    auto pack = ap::pack {
-        MyPack  {},
-        ap::var { ap::i8, "Var1" }
+int main()                     {
+    auto pack = ap::pack       {
+        MyPack()               ,
+        ap::let(ap::i8_t)("v1"),
+        ap::let(ap::i8_t)("v2"),
+        ap::let(ap::i8_t)("v3"),
+        ap::let(ap::i8_t)("v4"),
+        ap::let(ap::i8_t)("v5"),
     };
 
     ap::var pack_var  { pack, "Var"  };

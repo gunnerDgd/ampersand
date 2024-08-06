@@ -3,8 +3,8 @@
 
 #include <ap/trait.hpp>
 
-namespace ap        {
-    struct boolean_t;
+namespace ap::types {
+    struct bool_t;
 
     struct f64_t;
     struct f32_t;
@@ -22,8 +22,8 @@ namespace ap        {
     struct u8_t;
 }
 
-namespace ap                                {
-    template <opc C, typename... T> class op;
+namespace ap                                 {
+    template <opc C, typename... T> struct op;
 
     template <typename... T> class pack;
     template <typename... T> class var;

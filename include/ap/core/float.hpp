@@ -3,12 +3,14 @@
 
 #include <type_traits>
 
-namespace ap       {
+namespace ap::types {
     struct f32_t {};
     struct f64_t {};
+}
 
-    extern f32_t f32;
-    extern f64_t f64;
+namespace ap                 {
+    extern types::f32_t f32_t;
+    extern types::f64_t f64_t;
 }
 
 #endif

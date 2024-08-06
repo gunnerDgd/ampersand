@@ -3,7 +3,7 @@
 
 #include <type_traits>
 
-namespace ap       {
+namespace ap::types {
     struct i64_t {};
     struct u64_t {};
 
@@ -15,18 +15,20 @@ namespace ap       {
 
     struct i8_t {};
     struct u8_t {};
+}
 
-    extern i8_t  i8;
-    extern u8_t  u8;
+namespace ap                 {
+    extern types::i64_t i64_t;
+    extern types::u64_t u64_t;
 
-    extern i16_t i16;
-    extern u16_t u16;
+    extern types::i32_t i32_t;
+    extern types::u32_t u32_t;
 
-    extern i32_t i32;
-    extern u32_t u32;
+    extern types::i16_t i16_t;
+    extern types::u16_t u16_t;
 
-    extern i64_t i64;
-    extern u64_t u64;
+    extern types::i8_t  i8_t;
+    extern types::u8_t  u8_t;
 }
 
 #endif
