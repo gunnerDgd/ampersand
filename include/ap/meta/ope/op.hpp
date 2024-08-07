@@ -4,15 +4,18 @@
 #include <string_view>
 #include <list>
 
+#include <ap/trans/trans.hpp>
 #include <ap/core/core.hpp>
 #include <ap/meta/meta.hpp>
 
 #include <ap/trait.hpp>
 
 
-namespace ap::meta                  {
-    class op                        {
+namespace ap::meta                                      {
+    class op                                            {
+        template <typename... T> friend class trans::ops;
         using arg_t = std::list<ope>;
+
         opc   opcode;
         arg_t arg;
 
@@ -51,8 +54,9 @@ namespace ap::meta                  {
         template <typename T, typename U>      friend op bool_or (T, U);
         template <typename T>                  friend op bool_not(T);
 
-        template <typename T, typename U>      friend op ord_eq(T, U);
-        template <typename T, typename U>      friend op ord_ne(T, U);
+        template <typename T, typename U>      friend op cmp_eq(T, U);
+        template <typename T, typename U>      friend op cmp_ne(T, U);
+
         template <typename T, typename U>      friend op ord_lt(T, U);
         template <typename T, typename U>      friend op ord_le(T, U);
         template <typename T, typename U>      friend op ord_gt(T, U);
@@ -64,9 +68,21 @@ namespace ap::meta                  {
                 (arg.emplace_back(ope), ...);
         }
     public:
-        template <opc C, typename... T>          
-        op(ap::op<C, T...> op) 
-            requires (C == opc::call) {
+        template <typename F, typename... A>          
+        op(ap::op<opc::call, F, A...> op)
+            requires (sizeof...(A) > 0)
+                : opcode(opc::call)          {
+                    arg.emplace_back (op.fun);
+
+                    [this, &op]<std::size_t... I> (std::index_sequence<I...>) {
+                        (arg.emplace_back(std::get<I>(op.arg)), ...);
+                    }   (std::make_index_sequence<sizeof...(A)> {});
+        }
+
+        template <typename F>
+        op(ap::op<opc::call, F> op)
+            : opcode (opc::call)         {
+                arg.emplace_back (op.fun);
         }
 
         template <opc C, typename T, typename U> 
@@ -121,8 +137,9 @@ namespace ap::meta                                                              
     template <typename T, typename U>      op bool_or (T self, U arg) { return op (opc::bool_or , self, arg); }
     template <typename T>                  op bool_not(T self)        { return op (opc::bool_not, self); }
 
-    template <typename T, typename U>      op ord_eq(T self, U arg) { return op (opc::ord_eq, self, arg); }
-    template <typename T, typename U>      op ord_ne(T self, U arg) { return op (opc::ord_ne, self, arg); }
+    template <typename T, typename U>      op cmp_eq(T self, U arg) { return op (opc::cmp_eq, self, arg); }
+    template <typename T, typename U>      op cmp_ne(T self, U arg) { return op (opc::cmp_ne, self, arg); }
+
     template <typename T, typename U>      op ord_lt(T self, U arg) { return op (opc::ord_lt, self, arg); }
     template <typename T, typename U>      op ord_le(T self, U arg) { return op (opc::ord_le, self, arg); }
     template <typename T, typename U>      op ord_gt(T self, U arg) { return op (opc::ord_gt, self, arg); }
