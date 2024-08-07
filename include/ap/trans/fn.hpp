@@ -18,30 +18,30 @@ namespace ap::trans                     {
         using str_t = std::string_view;
         using trait = T;
     public:
+        auto operator()(meta::fn func)       {
+            auto fn = this->make (func.name);
+
+            auto ret = func.ret;
+            if (ret.index() == 0) this->ret(fn, std::get<0>(ret));
+            if (ret.index() == 1) this->ret(fn, std::get<1>(ret));
+            for (auto&& arg : func.arg) this->arg(fn, arg);
+
+            if (!func.src.has_value()) return fn;
+            auto& src = func.src.value();
+
+            for (auto& op : src.ops) this->ops (op);
+            return fn;
+        }
+
+
         auto make(str_t);
-        auto make(auto&);
 
         void src(auto&&, ap::meta::op);
         void arg(auto&&, ap::meta::var);
         void arg(auto&&, str_t, str_t);
-        void ret(auto&&, str_t);
-        
-        void ret_f64(auto&&);
-        void ret_f32(auto&&);
 
-        void ret_u64(auto&&);
-        void ret_i64(auto&&);
-
-        void ret_u32(auto&&);
-        void ret_i32(auto&&);
-
-        void ret_u16(auto&&);
-        void ret_i16(auto&&);
-
-        void ret_u8 (auto&&);
-        void ret_i8 (auto&&);
-
-        
+        void ret(auto&&, meta::type_id);
+        void ret(auto&&, str_t);        
     };
 }
 
@@ -63,13 +63,6 @@ namespace ap::trans                     {
     }
 
     template <typename T, typename... U>
-    auto 
-        fn<T, trans::ops<U...>>::make
-            (auto& fn)                {
-                return trait::make(fn); 
-    }
-
-    template <typename T, typename... U>
     void 
         fn<T, trans::ops<U...>>::arg
             (auto&& fn, ap::meta::var arg) {
@@ -88,7 +81,7 @@ namespace ap::trans                     {
     }
 }
 
-namespace ap::trans {
+namespace ap::trans                     {
     template <typename T, typename... U>
     void 
         fn<T, trans::ops<U...>>::ret
@@ -98,72 +91,9 @@ namespace ap::trans {
 
     template <typename T, typename... U>
     void 
-        fn<T, trans::ops<U...>>::ret_f64
-            (auto&& fn)           {
-                trait::ret_f64(fn); 
-    }
-
-    template <typename T, typename... U>
-    void 
-        fn<T, trans::ops<U...>>::ret_f32
-            (auto&& fn)           {
-                trait::ret_f32(fn); 
-    }
-
-    template <typename T, typename... U>
-    void 
-        fn<T, trans::ops<U...>>::ret_u64
-            (auto&& fn) { 
-                trait::ret_u64(fn); 
-    }
-
-    template <typename T, typename... U>
-    void 
-        fn<T, trans::ops<U...>>::ret_i64
-            (auto&& fn)           {
-                trait::ret_i64(fn); 
-    }
-
-    template <typename T, typename... U>
-    void 
-        fn<T, trans::ops<U...>>::ret_u32
-            (auto&& fn)           {
-                trait::ret_u32(fn); 
-    }
-
-    template <typename T, typename... U>
-    void 
-        fn<T, trans::ops<U...>>::ret_i32
-            (auto&& fn)           {
-                trait::ret_i32(fn); 
-    }
-
-    template <typename T, typename... U>
-    void 
-        fn<T, trans::ops<U...>>::ret_u16
-            (auto&& fn)           {
-                trait::ret_u16(fn); 
-    }
-
-    template <typename T, typename... U>
-    void 
-        fn<T, trans::ops<U...>>::ret_i16
-            (auto&& fn)           {
-                trait::ret_i16(fn); 
-    }
-
-    template <typename T, typename... U>
-    void 
-        fn<T, trans::ops<U...>>::ret_u8
-            (auto&& fn)          {
-                trait::ret_u8(fn); 
-    }
-
-    template <typename T, typename... U>
-    void 
-        fn<T, trans::ops<U...>>::ret_i8
-            (auto&& fn)          {
-                trait::ret_i8(fn);
+        fn<T, trans::ops<U...>>::ret
+            (auto && fn, meta::type_id type) { 
+                trait::ret(fn, type);
     }
 }
 
