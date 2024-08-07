@@ -4,6 +4,7 @@
 #include <ap/core/core.hpp>
 #include <ap/trait.hpp>
 
+#include "ope/func.hpp"
 #include "ope/var.hpp"
 #include "ope/num.hpp"
 #include "ope/op.hpp"
@@ -16,15 +17,27 @@
 #include <optional>
 
 
-namespace ap::meta                              {
-    class ope                                   {
-        using sub_t = std::variant<var, num, op>;
+namespace ap::meta                                    {
+    class ope                                         {
+        using sub_t = std::variant<var, num, op, func>;
         sub_t sub;
 
-        friend std::optional<var> as_var(ope&);
-        friend std::optional<num> as_num(ope&);
-        friend std::optional<op>  as_op (ope&);
+        friend std::optional<func> as_func(ope&);
+        friend std::optional<var>  as_var (ope&);
+        friend std::optional<num>  as_num (ope&);
+        friend std::optional<op>   as_op  (ope&);
     public:
+        enum class type {
+            none,
+            func,
+            var ,
+            num ,
+            op
+        };
+
+        friend type type(ope&);
+    public:
+        ope(func&);
         ope(var&);
         ope(num&);
         ope(op&);
@@ -37,11 +50,21 @@ namespace ap::meta                              {
         ope(std::integral       auto arg) : sub (ap::meta::num (arg)) {}
 
         template <ap::opc C, typename... T> ope(ap::op<C, T...> arg) : sub (ap::meta::op(arg)) {}
+        template <typename... T>            ope(ap::fn<T...> fn)     : sub (func(fn))          {}
     };
 
-    std::optional<var> as_var(ope&);
-    std::optional<num> as_num(ope&);
-    std::optional<op>  as_op (ope&);
+    
+}
+
+namespace ap::meta      {
+    ope::type type(ope&);
+}
+
+namespace ap::meta                   {
+    std::optional<func> as_func(ope&);
+    std::optional<var>  as_var (ope&);
+    std::optional<num>  as_num (ope&);
+    std::optional<op>   as_op  (ope&);
 }
 
 #endif
