@@ -11,9 +11,21 @@
 #include <ap/trait.hpp>
 
 
-namespace ap::meta                                      {
-    class op                                            {
+namespace ap::meta                                          {
+    class op                                                {
+        template <typename... T> friend class trans::boolean;
+        template <typename... T> friend class trans::func;
+        template <typename... T> friend class trans::mem;
+        template <typename... T> friend class trans::ari;
+        template <typename... T> friend class trans::bit;
+        template <typename... T> friend class trans::cmp;
+        template <typename... T> friend class trans::ord;
+
+        template <typename... T> friend class trans::pack;
+        template <typename... T> friend class trans::var;
         template <typename... T> friend class trans::ops;
+        template <typename... T> friend class trans::op;
+        template <typename... T> friend class trans::fn;
         using arg_t = std::list<ope>;
 
         opc   opcode;

@@ -17,6 +17,20 @@ namespace ap::meta                     {
         using str_t = std::string_view;
         using idx_t = type_id;
 
+        template <typename... T> friend class trans::boolean;
+        template <typename... T> friend class trans::func;
+        template <typename... T> friend class trans::mem;
+        template <typename... T> friend class trans::ari;
+        template <typename... T> friend class trans::bit;
+        template <typename... T> friend class trans::cmp;
+        template <typename... T> friend class trans::ord;
+
+        template <typename... T> friend class trans::pack;
+        template <typename... T> friend class trans::var;
+        template <typename... T> friend class trans::ops;
+        template <typename... T> friend class trans::op;
+        template <typename... T> friend class trans::fn;
+
         friend std::variant <str_t, type_id> type(var&);
         friend std::optional<str_t>          self(var&);
         friend std::optional<str_t>          name(var&);

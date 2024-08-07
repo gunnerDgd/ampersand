@@ -16,6 +16,20 @@ namespace ap::meta                                    {
         template <typename... T> friend class ap::var;
         template <typename... T> friend class ap::fn;
 
+        template <typename... T> friend class trans::boolean;
+        template <typename... T> friend class trans::func;
+        template <typename... T> friend class trans::mem;
+        template <typename... T> friend class trans::ari;
+        template <typename... T> friend class trans::bit;
+        template <typename... T> friend class trans::cmp;
+        template <typename... T> friend class trans::ord;
+
+        template <typename... T> friend class trans::pack;
+        template <typename... T> friend class trans::var;
+        template <typename... T> friend class trans::ops;
+        template <typename... T> friend class trans::op;
+        template <typename... T> friend class trans::fn;
+
         template <typename T>    friend class ari_eq;
         template <typename T>    friend class bit_eq;
         template <typename T>    friend class move;

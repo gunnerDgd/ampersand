@@ -7,9 +7,6 @@
 #include <ap/trans/trans.hpp>
 #include <ap/core/core.hpp>
 #include <ap/meta/meta.hpp>
-
-#include <ap/meta/pack.hpp>
-#include <ap/meta/ope.hpp>
 #include <ap/trait.hpp>
 
 namespace ap::meta                                                  {
@@ -18,6 +15,20 @@ namespace ap::meta                                                  {
         using src_t = std::optional<meta::src>;
         using str_t = std::string_view;
         using arg_t = std::list<var>;
+
+        template <typename... T> friend class trans::boolean;
+        template <typename... T> friend class trans::func;
+        template <typename... T> friend class trans::mem;
+        template <typename... T> friend class trans::ari;
+        template <typename... T> friend class trans::bit;
+        template <typename... T> friend class trans::cmp;
+        template <typename... T> friend class trans::ord;
+
+        template <typename... T> friend class trans::pack;
+        template <typename... T> friend class trans::var;
+        template <typename... T> friend class trans::ops;
+        template <typename... T> friend class trans::op;
+        template <typename... T> friend class trans::fn;
 
         friend str_t name(ap::meta::fn&);
         str_t name;

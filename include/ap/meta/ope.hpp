@@ -1,6 +1,7 @@
 #ifndef AP_META_OPE_HPP
 #define AP_META_OPE_HPP
 
+#include <ap/trans/trans.hpp>
 #include <ap/core/core.hpp>
 #include <ap/trait.hpp>
 
@@ -20,6 +21,20 @@
 namespace ap::meta                                    {
     class ope                                         {
         using sub_t = std::variant<var, num, op, func>;
+        template <typename... T> friend class trans::boolean;
+        template <typename... T> friend class trans::func;
+        template <typename... T> friend class trans::mem;
+        template <typename... T> friend class trans::ari;
+        template <typename... T> friend class trans::bit;
+        template <typename... T> friend class trans::cmp;
+        template <typename... T> friend class trans::ord;
+
+        template <typename... T> friend class trans::pack;
+        template <typename... T> friend class trans::var;
+        template <typename... T> friend class trans::ops;
+        template <typename... T> friend class trans::op;
+        template <typename... T> friend class trans::fn;
+
         sub_t sub;
 
         friend std::optional<func> as_func(ope&);
