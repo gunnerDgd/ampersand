@@ -28,6 +28,10 @@ namespace ap::trans                     {
         auto operator()(ap::fn<void()> func)       {
             auto fn = trait::make (ap::name (func));
 
+            if (!func.src.has_value()) return trait::make(fn);
+            auto src = func.src.value();
+
+            for (auto&& pos : src) this->src(pos);
             return trait::make (fn);
         }
         
