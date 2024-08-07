@@ -26,13 +26,19 @@ namespace ap                                              {
     auto 
         call<T>::operator()
             (Arg... arg)                                    {
+                auto ret = meta::call (sub, arg...);
+                meta::src::push(ret);
+
                 return op<opc::call, T, Arg...>(sub, arg...); 
     }
 
     template <typename T>
     auto 
-        call<T>::operator()()           {
-            return op<opc::call, T>(sub); 
+        call<T>::operator()()         {
+            auto ret = meta::call(sub);
+            meta::src::push(ret);
+
+            return op<opc::call, T>(sub);
     }
 }
 
