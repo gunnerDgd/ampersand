@@ -3,7 +3,8 @@
 
 namespace ap::trans                       {
     template <typename... T> class boolean;
-    template <typename... T> class move;
+    template <typename... T> class func;
+    template <typename... T> class mem;
     template <typename... T> class ari;
     template <typename... T> class bit;
     template <typename... T> class cmp;
@@ -13,6 +14,7 @@ namespace ap::trans                       {
     template <typename... T> class var;
     template <typename... T> class ops;
     template <typename... T> class op;
+    template <typename... T> class fn;
 }
 
 #endif
