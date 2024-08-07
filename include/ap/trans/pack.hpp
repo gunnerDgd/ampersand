@@ -20,7 +20,6 @@ namespace ap::trans                        {
         using trait = typename Trait;
     public:
         auto make(str_t);
-        auto make(auto&);
 
         auto operator()(ap::meta::pack&);
 
@@ -81,7 +80,7 @@ namespace ap::trans                                                             
     }
 }
 
-namespace ap::trans                                                                                            {
+namespace ap::trans                                                                                              {
     template <typename T> void pack<T>::var(auto&& self, str_t type, str_t name) { trait::var(self, type, name); }
 
     template <typename T> void pack<T>::f64(auto&& self, str_t name)  { trait::f64(self, name); }
@@ -100,7 +99,6 @@ namespace ap::trans                                                             
     template <typename T> void pack<T>::i8 (auto&& self, str_t name)  { trait::i8 (self, name); }
 
     template <typename T> auto pack<T>::make(str_t name) { return trait::make(name); }
-    template <typename T> auto pack<T>::make(auto& self) { return trait::make(self); }
 }
 
 namespace ap::trans                                   {
@@ -108,12 +106,12 @@ namespace ap::trans                                   {
     auto
         pack<Trait>::operator()
             (ap::meta::pack& arg)                     {
-                auto ret = push (ap::meta::name (arg));
+                auto ret = make (ap::meta::name (arg));
                 for (auto&& pos : arg.sub)            {
                     (*this)(ret, pos);
                 }
 
-                return pop(ret);
+                return ret
     }
 }
 
