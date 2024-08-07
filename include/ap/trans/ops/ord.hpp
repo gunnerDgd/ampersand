@@ -9,14 +9,12 @@ namespace ap::trans                         {
     template <typename Trait>
     class ord <Trait>                       {
     public:
-        using trait = typename Trait;
-        using ret_t = typename Trait::ret_t;
-        using str_t = std::string_view;
+        using trait = Trait;
     public:
-        ret_t ord_gt(auto ops) { return trait::ord_gt(ops); }
-        ret_t ord_ge(auto ops) { return trait::ord_ge(ops); }
-        ret_t ord_lt(auto ops) { return trait::ord_lt(ops); }
-        ret_t ord_le(auto ops) { return trait::ord_le(ops); }
+        void ord_gt(auto ops) { trait::ord_gt(ops); }
+        void ord_ge(auto ops) { trait::ord_ge(ops); }
+        void ord_lt(auto ops) { trait::ord_lt(ops); }
+        void ord_le(auto ops) { trait::ord_le(ops); }
     };
 }
 

@@ -10,21 +10,18 @@ namespace ap::trans                        {
     class ari<Trait>                       {
     public:
         using trait = typename Trait;
-        using ret_t = typename Trait::ret_t;
-        using str_t = std::string_view;
-
     public:
-        ret_t add_eq(auto ops) { return trait::add_eq(ops); }
-        ret_t sub_eq(auto ops) { return trait::sub_eq(ops); }
-        ret_t mul_eq(auto ops) { return trait::mul_eq(ops); }
-        ret_t div_eq(auto ops) { return trait::div_eq(ops); }
-        ret_t mod_eq(auto ops) { return trait::mod_eq(ops); }
+        void add_eq(auto ops) { trait::add_eq(ops); }
+        void sub_eq(auto ops) { trait::sub_eq(ops); }
+        void mul_eq(auto ops) { trait::mul_eq(ops); }
+        void div_eq(auto ops) { trait::div_eq(ops); }
+        void mod_eq(auto ops) { trait::mod_eq(ops); }
 
-        ret_t add(auto ops) { return trait::add(ops); }
-        ret_t sub(auto ops) { return trait::sub(ops); }
-        ret_t mul(auto ops) { return trait::mul(ops); }
-        ret_t div(auto ops) { return trait::div(ops); }
-        ret_t mod(auto ops) { return trait::mod(ops); }
+        void add(auto ops) { trait::add(ops); }
+        void sub(auto ops) { trait::sub(ops); }
+        void mul(auto ops) { trait::mul(ops); }
+        void div(auto ops) { trait::div(ops); }
+        void mod(auto ops) { trait::mod(ops); }
     };
 }
 

@@ -9,17 +9,14 @@ namespace ap::trans                         {
     class bit <Trait>                       {
     public:
         using trait = typename Trait;
-        using ret_t = typename Trait::ret_t;
-        using str_t = std::string_view;
-
     public:
-        ret_t bit_and_eq(auto ops) { return trait::bit_and_eq (ops); }
-        ret_t bit_or_eq (auto ops) { return trait::bit_or_eq  (ops); }
-        ret_t bit_xor_eq(auto ops) { return trait::bit_xor_eq (ops); }
+        void bit_and_eq(auto ops) { trait::bit_and_eq (ops); }
+        void bit_or_eq (auto ops) { trait::bit_or_eq  (ops); }
+        void bit_xor_eq(auto ops) { trait::bit_xor_eq (ops); }
         
-        ret_t bit_and(auto ops) { return trait::bit_and (ops); }
-        ret_t bit_or (auto ops) { return trait::bit_or  (ops); }
-        ret_t bit_xor(auto ops) { return trait::bit_xor (ops); }
+        void bit_and(auto ops) { trait::bit_and (ops); }
+        void bit_or (auto ops) { trait::bit_or  (ops); }
+        void bit_xor(auto ops) { trait::bit_xor (ops); }
     };
 }
 

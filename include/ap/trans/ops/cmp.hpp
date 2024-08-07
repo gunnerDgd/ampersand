@@ -8,13 +8,10 @@ namespace ap::trans                         {
     template <typename Trait>
     class cmp<Trait>                        {
     public:
-        using trait = typename Trait;
-        using ret_t = typename Trait::ret_t;
-        using str_t = std::string_view;
-
+        using trait = Trait;
     public:
-        ret_t cmp_eq(auto ops) { return trait::cmp_eq(ops); }
-        ret_t cmp_ne(auto ops) { return trait::cmp_ne(ops); }
+        void cmp_eq(auto ops) { trait::cmp_eq(ops); }
+        void cmp_ne(auto ops) { trait::cmp_ne(ops); }
     };
 }
 
