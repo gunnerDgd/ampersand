@@ -1,6 +1,7 @@
 add_library              (
     ampersand-meta STATIC
 
+    ../../include/ap/meta/ope/func.hpp
     ../../include/ap/meta/ope/num.hpp
     ../../include/ap/meta/ope/var.hpp
     ../../include/ap/meta/ope/op.hpp
@@ -12,7 +13,9 @@ add_library              (
     ../../include/ap/meta/fn.hpp
     ../../include/ap/meta.hpp
 
+    ope/func.cpp
     ope/var.cpp
+    ope/num.cpp
     pack.cpp
     ope.cpp
     src.cpp
