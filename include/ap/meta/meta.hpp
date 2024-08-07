@@ -14,6 +14,7 @@ namespace ap::meta                     {
 
         f64, f32,
         pack,
+        func,
         none
     };
 }
