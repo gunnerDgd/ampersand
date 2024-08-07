@@ -52,6 +52,20 @@ namespace ap::meta            {
     type_id       type  (num&);
 }
 
+namespace ap::meta                        {
+    std::string_view name(ap::meta::pack&);
+    std::string_view name(ap::meta::func&);
+    std::string_view name(ap::meta::fn&);
+}
+
+
+namespace ap::meta                   {
+    std::optional<func> as_func(ope&);
+    std::optional<var>  as_var (ope&);
+    std::optional<num>  as_num (ope&);
+    std::optional<op>   as_op  (ope&);
+}
+
 namespace ap::meta {
     template <typename T, typename U>      op move(T, U);
     template <typename T>                  op push(T);
