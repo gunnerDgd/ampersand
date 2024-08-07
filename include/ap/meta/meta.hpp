@@ -35,6 +35,23 @@ namespace ap::meta                                     {
     std::optional<std::string_view>          name(var&);
 }
 
+namespace ap::meta            {
+    std::uint64_t as_u64(num&);
+    std::uint32_t as_u32(num&);
+    std::uint16_t as_u16(num&);
+    std::uint8_t  as_u8 (num&);
+
+    std::int64_t  as_i64(num&);
+    std::int32_t  as_i32(num&);
+    std::int16_t  as_i16(num&);
+    std::int8_t   as_i8 (num&);
+
+    double        as_f64(num&);
+    float         as_f32(num&);
+
+    type_id       type  (num&);
+}
+
 namespace ap::meta {
     template <typename T, typename U>      op move(T, U);
     template <typename T>                  op push(T);
