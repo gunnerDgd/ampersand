@@ -135,11 +135,12 @@ namespace ap::trans                                  {
     template <typename T, typename... Arg>
     void
         ops<T, Arg...>::self
-            (auto&& op, ap::meta::var self)  {
-                auto type = ap::type (self);
+            (auto&& op, ap::meta::var self)    {
+                auto type = ap::meta::type(self);
+                auto name = ap::meta::name(self);
                 
-                if (type.index() == 0) T::self(op, std::get<0>(type), ap::name(self));
-                if (type.index() == 1) T::self(op, std::get<1>(type), ap::name(self));
+                if (type.index() == 0) T::self(op, std::get<0>(type), name.value());
+                if (type.index() == 1) T::self(op, std::get<1>(type), name.value());
     }
 
     template <typename T, typename... Arg>
@@ -222,18 +223,19 @@ namespace ap::trans                                                          {
     template <typename T, typename... Arg>
     void
         ops<T, Arg...>::arg
-            (auto&& op, ap::meta::func arg)                      {
-                T::arg (op, meta::type_id::func, ap::name(arg));
+            (auto&& op, ap::meta::func arg)                          {
+                T::arg (op, meta::type_id::func, ap::meta::name(arg));
     }
 
     template <typename T, typename... Arg>
     void
         ops<T, Arg...>::arg
-            (auto&& op, ap::meta::var arg) {
-                auto type = ap::type(self);
+            (auto&& op, ap::meta::var arg)     {
+                auto type = ap::meta::type(arg);
+                auto name = ap::meta::name(arg);
 
-                if (type.index() == 0) T::arg(op, std::get<0>(type), ap::name(self));
-                if (type.index() == 1) T::arg(op, std::get<1>(type), ap::name(self));
+                if (type.index() == 0) T::arg(op, std::get<0>(type), name.value());
+                if (type.index() == 1) T::arg(op, std::get<1>(type), name.value());
     }
 
     template <typename T, typename... Arg>
