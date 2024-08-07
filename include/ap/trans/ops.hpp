@@ -128,8 +128,8 @@ namespace ap::trans                                  {
     template <typename T, typename... Arg>
     void
         ops<T, Arg...>::self
-            (auto&& op, ap::meta::func self)                      {
-                T::self(op, meta::type_id::func, ap::name(self));
+            (auto&& op, ap::meta::func self)                          {
+                T::self(op, meta::type_id::func, ap::meta::name(self));
     }
 
     template <typename T, typename... Arg>
@@ -185,24 +185,24 @@ namespace ap::trans                                  {
 }
 
 // For ap::trans::ops::arg
-namespace ap::trans                                                          {
+namespace ap::trans                                                              {
     template <typename T, typename... Arg>
     void
         ops<T, Arg...>::arg
-            (auto&& op, ap::meta::num arg)                                   {
-                switch (ap::meta::type(arg))                                 {
-                    case meta::type_id::f64: T::arg(meta::as_f64(arg)); break;
-                    case meta::type_id::f32: T::arg(meta::as_f32(arg)); break;
+            (auto&& op, ap::meta::num arg)                                       {
+                switch (ap::meta::type(arg))                                     {
+                    case meta::type_id::f64: T::arg(op, meta::as_f64(arg)); break;
+                    case meta::type_id::f32: T::arg(op, meta::as_f32(arg)); break;
 
-                    case meta::type_id::u64: T::arg(meta::as_u64(arg)); break;
-                    case meta::type_id::u32: T::arg(meta::as_u32(arg)); break;
-                    case meta::type_id::u16: T::arg(meta::as_u16(arg)); break;
-                    case meta::type_id::u8 : T::arg(meta::as_u8 (arg)); break;
+                    case meta::type_id::u64: T::arg(op, meta::as_u64(arg)); break;
+                    case meta::type_id::u32: T::arg(op, meta::as_u32(arg)); break;
+                    case meta::type_id::u16: T::arg(op, meta::as_u16(arg)); break;
+                    case meta::type_id::u8 : T::arg(op, meta::as_u8 (arg)); break;
 
-                    case meta::type_id::i64: T::arg(meta::as_i64(arg)); break;
-                    case meta::type_id::i32: T::arg(meta::as_i32(arg)); break;
-                    case meta::type_id::i16: T::arg(meta::as_i16(arg)); break;
-                    case meta::type_id::i8 : T::arg(meta::as_i8 (arg)); break;
+                    case meta::type_id::i64: T::arg(op, meta::as_i64(arg)); break;
+                    case meta::type_id::i32: T::arg(op, meta::as_i32(arg)); break;
+                    case meta::type_id::i16: T::arg(op, meta::as_i16(arg)); break;
+                    case meta::type_id::i8 : T::arg(op, meta::as_i8 (arg)); break;
                 }
     }
 
