@@ -3,6 +3,7 @@
 
 #include <ap/core/operator/call.hpp>
 
+#include <ap/trans/trans.hpp>
 #include <ap/meta/meta.hpp>
 #include <ap/meta/src.hpp>
 #include <ap/trait.hpp>
@@ -28,7 +29,10 @@ namespace ap                         {
         
         template <std::size_t I, typename... T> friend auto arg (const fn<T...>&);
         template                <typename... T> friend auto name(const fn<T...>&);
-        friend class meta::fn;
+
+        template <typename... F>
+        friend class trans::fn;
+        friend class meta ::fn;
 
         str_t name;
         arg_t arg;
@@ -46,7 +50,10 @@ namespace ap                         {
         using str_t = std::string_view;
         
         template <typename... T> friend auto name(const fn<T...>&);
-        friend class meta::fn;
+        template <typename... F>
+        friend class trans::fn;
+        friend class meta ::fn;
+
         str_t name;
         src_t src;
     public:
@@ -58,13 +65,16 @@ namespace ap                         {
     class fn<void(A...)> 
         : public call<fn<void(A...)>>          
                                                                                  {
+
         using arg_t = std::optional <std::tuple <A...>>;
         using src_t = std::optional <meta::src>;
         using str_t = std::string_view;
         
         template <std::size_t I, typename... T> friend auto arg (const fn<T...>&);
         template                <typename... T> friend auto name(const fn<T...>&);
-        friend class meta::fn;
+        template <typename... F>
+        friend class trans::fn;
+        friend class meta ::fn;
 
         str_t name;
         arg_t arg;
@@ -82,7 +92,9 @@ namespace ap                         {
         using str_t = std::string_view;
         
         template <typename... T> friend auto name(const fn<T...>&);
-        friend class meta::fn;
+        template <typename... F>
+        friend class trans::fn;
+        friend class meta ::fn;
 
         str_t name;
         src_t src;
