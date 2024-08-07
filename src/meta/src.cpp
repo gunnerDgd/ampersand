@@ -54,21 +54,6 @@ namespace ap::meta                                  {
 
     void
         src::push
-            (ap::meta::ope op)                      {
-                auto& src = ap::meta::builtin::scope;
-                auto  ope = ap::meta::as_op(op);
-
-                if (src.empty()) return;
-                if (!ope)        return;
-
-                auto& cur = src.top();
-                auto& ret = cur.ops;
-                
-                ret.push_back (ope.value());
-    }
-
-    void
-        src::push
             (ap::meta::op op)                       {
                 auto& src = ap::meta::builtin::scope;
                 if (src.empty()) return;
