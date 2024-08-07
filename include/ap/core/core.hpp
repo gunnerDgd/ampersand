@@ -48,6 +48,8 @@ namespace ap                                            {
 
 namespace ap                           {
     template <typename T> class boolean;
+    template <typename T> class call;
+
     template <typename T> class ari_eq;
     template <typename T> class bit_eq;
     template <typename T> class ari;
