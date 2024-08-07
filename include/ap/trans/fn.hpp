@@ -61,8 +61,8 @@ namespace ap::trans                     {
         void ret_i8 (auto&& fn) { trait::ret_i8 (fn); }
 
         template <opc C, typename... V>
-        void src (auto&& fn, ap::op<C, V...> op) { trait::src(this->ops(op)); }
-        void src (auto&& fn, ap::meta::op op)    { trait::src(this->ops(op)); }
+        void src (auto&& fn, ap::op<C, V...> op) { trait::src(fn, this->ops(op)); }
+        void src (auto&& fn, ap::meta::op op)    { trait::src(fn, this->ops(op)); }
     };
 }
 
@@ -75,7 +75,7 @@ namespace ap::trans                                 {
                 auto pack = ap::type (var);
                 auto name = ap::name (var);
 
-                trait::arg (ap::name (pack), name);
+                trait::arg (fn, ap::name (pack), name);
     }
 
     template <typename T, typename... U>
