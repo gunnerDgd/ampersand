@@ -19,8 +19,8 @@ namespace ap::trans                        {
         using str_t = std::string_view;
         using trait = typename Trait;
     public:
-        auto  push(str_t);
-        auto  pop (auto&);
+        auto  make(str_t);
+        auto  make(auto&);
 
         template <typename N, typename... T>
         auto  operator()(ap::pack<N, T...>&);
@@ -135,8 +135,8 @@ namespace ap::trans                                                             
     template <typename T> void pack<T>::u8 (auto&& self, str_t name)  { trait::u8 (self, name); }
     template <typename T> void pack<T>::i8 (auto&& self, str_t name)  { trait::i8 (self, name); }
 
-    template <typename T> auto pack<T>::push(str_t name) { return trait::push (name); }
-    template <typename T> auto pack<T>::pop (auto& self) { return trait::pop  (self); }
+    template <typename T> auto pack<T>::make(str_t name) { return trait::make(name); }
+    template <typename T> auto pack<T>::make(auto& self) { return trait::make(self); }
 }
 
 namespace ap::trans                                                          {
