@@ -19,6 +19,7 @@ namespace ap::meta                     {
 }
 
 namespace ap::meta {
+    class func;
     class pack;
     class src;
     class var;
@@ -70,8 +71,9 @@ namespace ap::meta {
     template <typename T, typename U>      op bool_or (T, U);
     template <typename T>                  op bool_not(T);
 
-    template <typename T, typename U>      op ord_eq(T, U);
-    template <typename T, typename U>      op ord_ne(T, U);
+    template <typename T, typename U>      op cmp_eq(T, U);
+    template <typename T, typename U>      op cmp_ne(T, U);
+
     template <typename T, typename U>      op ord_lt(T, U);
     template <typename T, typename U>      op ord_le(T, U);
     template <typename T, typename U>      op ord_gt(T, U);
