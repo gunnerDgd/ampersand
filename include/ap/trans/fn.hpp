@@ -44,8 +44,20 @@ namespace ap::trans                     {
         void arg(auto&&, str_t, str_t);
 
         void ret(auto&&, meta::type_id);
-        void ret(auto&&, str_t);        
+        void ret(auto&&, str_t);
+
+        fn(T, trans::ops<U...>);
     };
+
+    template <typename T, typename U> fn(T, U) -> fn<T, U>;
+}
+
+namespace ap::trans {
+    template <typename T, typename... U>
+    fn<T, trans::ops<U...>>::fn
+        (T, trans::ops<U...> ops)
+            : ops (ops)
+                {}
 }
 
 namespace ap::trans {
