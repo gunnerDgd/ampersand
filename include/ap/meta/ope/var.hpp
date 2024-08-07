@@ -29,8 +29,9 @@ namespace ap::meta                     {
     public:
         template <typename T, is::pack_t U> var(ap::var<T, ap::var<U>>);
         template <typename T, is::num_t  U> var(ap::var<T, ap::var<U>>);
-        template <is::pack_t T>             var(ap::var<T>);
-        template <is::num_t  T>             var(ap::var<T>);
+
+        template <is::pack_t  T>            var(ap::var<T>);
+        template <is::num_t   T>            var(ap::var<T>);
     };
 
     template <typename T, is::pack_t U>
@@ -74,7 +75,7 @@ namespace ap::meta                     {
 
     template <is::num_t T>
     var::var(ap::var<T> var)
-        : name(ap::name(var))                                           {
+        : name(ap::name(var))                                                  {
             if constexpr (std::same_as<T, ap::types::i64_t>) idx = type_id::i64;
             if constexpr (std::same_as<T, ap::types::i32_t>) idx = type_id::i32;
             if constexpr (std::same_as<T, ap::types::i16_t>) idx = type_id::i16;
