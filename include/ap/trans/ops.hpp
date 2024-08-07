@@ -31,16 +31,27 @@ namespace ap::trans                       {
         template <ap::opc C, typename T1, typename T2> auto operator()(ap::op<C, T1, T2>) requires (C == opc::call);
         template <ap::opc C, typename T1, typename T2> auto operator()(ap::op<C, T1, T2>) requires (C == opc::ret);
         
-        auto operator()(ap::meta::op op)                           {
+        auto operator()(ap::meta::op op) {
             auto  ops = T::ops();
             auto& arg = op.arg;
 
             auto pos = arg.begin();
             this->self (arg, *pos);
 
+            if (op.opcode == opc::push)      {
+                auto opt = meta::as_var(*pos);
+
+                if (!opt)   return ops;
+                auto var = opt.value();
+
+                auto type = ap::meta::type (var);
+                if  (type.index() == 0) this->push(ops, std::get<0>(type));
+                if  (type.index() == 1) this->push(ops, std::get<1>(type));
+                return ops;
+            }
+
             switch (op.opcode)                                    {
                 case opc::move:       this->move      (ops); break;
-                case opc::push:       this->push      (ops); break;
                 case opc::pop:        this->pop       (ops); break;
 
                 case opc::call:       this->call      (ops); break;
