@@ -6,6 +6,9 @@
 #include <ap/trans/trans.hpp>
 #include <ap/trait.hpp>
 
+#include <ap/meta/src.hpp>
+#include <ap/meta/fn.hpp>
+
 #include <ap/core/fn.hpp>
 #include <string_view>
 
