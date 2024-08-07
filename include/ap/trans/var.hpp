@@ -14,8 +14,6 @@ namespace ap::trans                                         {
         using str_t = std::string_view;
         using trait = Trait;
     public:
-        template <is::pack_t V> auto operator()(ap::var<V>&);
-        template <is::num_t  V> auto operator()(ap::var<V>&);
         auto operator()(meta::var&);
         auto pack(str_t, str_t);
 
@@ -56,39 +54,7 @@ namespace ap::trans                                                             
     template <typename T> auto var<T>::i8 (str_t name) { return trait::i8  (name); }
 }
 
-namespace ap::trans                       {
-    template <typename T>
-    template <is::pack_t V>
-    auto
-        var<T>::operator()
-            (ap::var<V>& var)             {
-                auto type = ap::type (var);
-                auto name = ap::name (var);
-
-                return pack(ap::name(type), name);
-    }
-
-    template <typename T>
-    template <is::num_t V>
-    auto
-        var<T>::operator()
-            (ap::var<V>& var)                                                               {
-                if constexpr (std::same_as<V, ap::types::f64_t>) return f64 (ap::name (var));
-                if constexpr (std::same_as<V, ap::types::f32_t>) return f32 (ap::name (var));
-
-                if constexpr (std::same_as<V, ap::types::u64_t>) return u64 (ap::name (var));
-                if constexpr (std::same_as<V, ap::types::i64_t>) return i64 (ap::name (var));
-
-                if constexpr (std::same_as<V, ap::types::u32_t>) return u32 (ap::name (var));
-                if constexpr (std::same_as<V, ap::types::i32_t>) return i32 (ap::name (var));
-
-                if constexpr (std::same_as<V, ap::types::u16_t>) return u16 (ap::name (var));
-                if constexpr (std::same_as<V, ap::types::i16_t>) return i16 (ap::name (var));
-
-                if constexpr (std::same_as<V, ap::types::u8_t>)  return u8  (ap::name (var));
-                if constexpr (std::same_as<V, ap::types::i8_t>)  return i8  (ap::name (var));
-    }
-
+namespace ap::trans                                                           {
     template <typename T>
     auto
         var<T>::operator()

@@ -19,16 +19,12 @@ namespace ap::trans                        {
         using str_t = std::string_view;
         using trait = typename Trait;
     public:
-        auto  make(str_t);
-        auto  make(auto&);
+        auto make(str_t);
+        auto make(auto&);
 
-        template <typename N, typename... T>
-        auto  operator()(ap::pack<N, T...>&);
-        auto  operator()(ap::meta::pack&);
+        auto operator()(ap::meta::pack&);
 
-        template <is::pack_t V> void operator()(auto&&, ap::var<V>);
-        template <is::num_t  V> void operator()(auto&&, ap::var<V>);
-        void operator()(auto&&, ap::meta::var);
+        void var(auto&&, ap::meta::var);
         void var(auto&&, str_t, str_t);
 
         void f64(auto&&, str_t);
@@ -51,42 +47,10 @@ namespace ap::trans                        {
 
 // For pack<T>
 
-namespace ap::trans                                                                {
-    template <typename T>
-    template <is::pack_t V>
-    void
-        pack<T>::operator()
-            (auto&& self, ap::var<V> var)               {
-                auto type = ap::type (var);
-                auto name = ap::name (var);
-
-                trait::var(self, ap::name(type), name);
-    }
-
-    template <typename T>
-    template <is::num_t V>
-    void
-        pack<T>::operator()
-            (auto&& self, ap::var<V> var)                                                  {
-                if constexpr (std::same_as<V, ap::types::f64_t>) f64 (self, ap::name (var));
-                if constexpr (std::same_as<V, ap::types::f32_t>) f32 (self, ap::name (var));
-
-                if constexpr (std::same_as<V, ap::types::u64_t>) u64 (self, ap::name (var));
-                if constexpr (std::same_as<V, ap::types::i64_t>) i64 (self, ap::name (var));
-
-                if constexpr (std::same_as<V, ap::types::u32_t>) u32 (self, ap::name (var));
-                if constexpr (std::same_as<V, ap::types::i32_t>) i32 (self, ap::name (var));
-
-                if constexpr (std::same_as<V, ap::types::u16_t>) u16 (self, ap::name (var));
-                if constexpr (std::same_as<V, ap::types::i16_t>) i16 (self, ap::name (var));
-
-                if constexpr (std::same_as<V, ap::types::u8_t>)  u8  (self, ap::name (var));
-                if constexpr (std::same_as<V, ap::types::i8_t>)  i8  (self, ap::name (var));
-    }
-
+namespace ap::trans                                                                  {
     template <typename T>
     void
-        pack<T>::operator()
+        pack<T>::var
             (auto&& self, ap::meta::var var)      {
                 auto type = ap::meta::type (var);
                 auto name = ap::meta::name (var);
@@ -139,20 +103,7 @@ namespace ap::trans                                                             
     template <typename T> auto pack<T>::make(auto& self) { return trait::make(self); }
 }
 
-namespace ap::trans                                                          {
-    template <typename Trait>
-    template <typename N, typename... T>
-    auto
-        pack<Trait>::operator()
-            (ap::pack<N, T...> & arg)                                             {
-                auto ret = push (ap::name (arg));
-                [this, &ret, &arg] <std::size_t... I> (std::index_sequence<I...>) {
-                    (((*this)(ret, ap::sub<I>(arg))), ...);
-                }   (std::make_index_sequence<sizeof...(T)>{});
-
-                return pop(ret);
-    }
-
+namespace ap::trans                                   {
     template <typename Trait>
     auto
         pack<Trait>::operator()
