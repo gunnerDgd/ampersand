@@ -131,7 +131,7 @@ namespace ap                                       {
 
         auto ret = func(arg...);
         static_assert (can::move<ap::var<R>, decltype(ret)>);
-        meta::ret (ret);
+        meta::src::push(meta::ret(ret));
 
         this->src = meta::src::pop();
         meta::src::push(*this);
@@ -159,7 +159,7 @@ namespace ap                                        {
         auto ret = func();
 
         static_assert (can::move<ap::var<R>, decltype(ret)>);
-        meta::ret (ret);
+        meta::src::push(meta::ret(ret));
 
         this->src = meta::src::pop();
         meta::src::push(*this);
@@ -188,7 +188,9 @@ namespace ap                                    {
               name (name)                  
                                                 {
         meta::src::push();
+        func (arg...);
 
+        meta::src::push(meta::ret(ret));
         this->src = meta::src::pop();
         meta::src::push(*this);
     }
@@ -212,6 +214,7 @@ namespace ap                                     {
               name (name)                    
                                      {
         meta::src::push ();
+        func();
 
         this->src = meta::src::pop();
         meta::src::push(*this);
