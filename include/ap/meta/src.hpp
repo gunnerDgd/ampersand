@@ -1,6 +1,7 @@
 #ifndef AP_META_SRC_HPP
 #define AP_META_SRC_HPP
 
+#include <ap/trans/trans.hpp>
 #include <ap/core/core.hpp>
 #include <ap/meta/meta.hpp>
 
@@ -18,11 +19,13 @@ namespace ap::meta                                    {
         template <typename T>    friend class ari_eq;
         template <typename T>    friend class bit_eq;
         template <typename T>    friend class move;
+        template <typename T>    friend class call;
+
+        template <typename... T> friend class trans::fn;
         using str_t = std::string_view;
 
         static void push(ap::meta::pack);
         static void push(ap::meta::var);
-        static void push(ap::meta::ope);
         static void push(ap::meta::op);
         static void push(ap::meta::fn);
         static void push();
