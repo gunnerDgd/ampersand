@@ -34,7 +34,7 @@ namespace ap::trans                     {
             if (!func.src.has_value()) return fn;
             auto& src = func.src.value();
 
-            for (auto& op : src.ops) this->src (op);
+            for (auto& op : src.ops) this->src (fn, op);
             return fn;
         }
 
@@ -86,8 +86,10 @@ namespace ap::trans                     {
                 auto type = meta::type(arg);
                 auto name = meta::name(arg);
 
-                if (type.index() == 0) trait::arg (fn, std::get<0>(type), name);
-                if (type.index() == 1) trait::arg (fn, std::get<1>(type), name);
+                if (!name.has_value()) return;
+
+                if (type.index() == 0) trait::arg (fn, std::get<0>(type), name.value());
+                if (type.index() == 1) trait::arg (fn, std::get<1>(type), name.value());
     }
 
     template <typename T, typename... U>
