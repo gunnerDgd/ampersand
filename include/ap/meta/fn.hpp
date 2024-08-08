@@ -9,9 +9,9 @@
 #include <ap/meta/meta.hpp>
 #include <ap/trait.hpp>
 
-namespace ap::meta                                                  {
-    class fn                                                        {
-        using ret_t = std::variant <std::string_view, meta::type_id>;
+namespace ap::meta                                                                  {
+    class fn                                                                        {
+        using ret_t = std::variant <std::monostate, std::string_view, meta::type_id>;
         using src_t = std::optional<meta::src>;
         using str_t = std::string_view;
         using arg_t = std::list<var>;

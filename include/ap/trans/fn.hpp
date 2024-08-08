@@ -27,8 +27,8 @@ namespace ap::trans                     {
             auto fn = this->make (func.name);
 
             auto ret = func.ret;
-            if (ret.index() == 0) this->ret(fn, std::get<0>(ret));
             if (ret.index() == 1) this->ret(fn, std::get<1>(ret));
+            if (ret.index() == 2) this->ret(fn, std::get<2>(ret));
             for (auto&& arg : func.arg) this->arg(fn, arg);
 
             if (!func.src.has_value()) return fn;
@@ -88,8 +88,8 @@ namespace ap::trans                     {
 
                 if (!name.has_value()) return;
 
-                if (type.index() == 0) trait::arg (fn, std::get<0>(type), name.value());
                 if (type.index() == 1) trait::arg (fn, std::get<1>(type), name.value());
+                if (type.index() == 2) trait::arg (fn, std::get<2>(type), name.value());
     }
 
     template <typename T, typename... U>
