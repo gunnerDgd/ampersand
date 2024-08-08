@@ -61,6 +61,12 @@ namespace ap                          {
             meta::src::push(meta::push(*this));
             meta::src::push(meta::var (*this));
         }
+
+        auto 
+            operator=(auto arg)                                    {
+                auto&  self = static_cast<ap::move<var<T>>&>(*this);
+                return self = arg;
+        }
     };
 
     template <is::float_t T>
@@ -95,6 +101,12 @@ namespace ap                          {
         {
             meta::src::push(meta::push(*this));
             meta::src::push(meta::var (*this));
+        }
+
+        auto 
+            operator=(auto arg)                                    {
+                auto&  self = static_cast<ap::move<var<T>>&>(*this);
+                return self = arg;
         }
     };
 

@@ -9,21 +9,21 @@
 
 namespace ap                          {
     template <is::int_t T, is::num_t U>
-    struct op <opc::move, T, U>
-        : public ari_eq <op <opc::move, T, U>>,
-          public bit_eq <op <opc::move, T, U>>,
+    struct op <opc::move, ap::var<T>, ap::var<U>>
+        : public ari_eq <op <opc::move, ap::var<T>, ap::var<U>>>,
+          public bit_eq <op <opc::move, ap::var<T>, ap::var<U>>>,
 
-          public ari <op <opc::move, T, U>>,
-          public bit <op <opc::move, T, U>> {
-            T self;
-            U arg;
+          public ari <op <opc::move, ap::var<T>, ap::var<U>>>,
+          public bit <op <opc::move, ap::var<T>, ap::var<U>>> {
+            ap::var<T> self;
+            ap::var<U> arg;
 
-            op(T self, U arg)
-                : ari_eq<op <opc::move, T, U>>(*this),
-                  bit_eq<op <opc::move, T, U>>(*this),
+            op(ap::var<T> self, ap::var<U> arg)
+                : ari_eq<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
+                  bit_eq<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
 
-                  ari<op <opc::move, T, U>>(*this),
-                  bit<op <opc::move, T, U>>(*this),
+                  ari<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
+                  bit<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
 
                   self(self),
                   arg (arg)
@@ -31,15 +31,15 @@ namespace ap                          {
     };
 
     template <is::float_t T, is::num_t U>
-    struct op <opc::move, T, U>
-        : public ari_eq <op <opc::move, T, U>>,
-          public ari    <op <opc::move, T, U>> {
-            T self;
-            U arg;
+    struct op <opc::move, ap::var<T>, ap::var<U>>
+        : public ari_eq <op <opc::move, ap::var<T>, ap::var<U>>>,
+          public ari    <op <opc::move, ap::var<T>, ap::var<U>>> {
+            ap::var<T> self;
+            ap::var<U> arg;
 
-            op(T self, U arg)
-                : ari_eq<op <opc::move, T, U>>(*this),
-                  ari   <op <opc::move, T, U>>(*this),
+            op(ap::var<T> self, ap::var<U> arg)
+                : ari_eq<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
+                  ari   <op <opc::move, ap::var<T>, ap::var<U>>>(*this),
 
                   self(self),
                   arg (arg)
@@ -48,21 +48,21 @@ namespace ap                          {
 
 
     template <is::int_t T, std::integral U>
-    struct op <opc::move, T, U>
-        : public ari_eq <op <opc::move, T, U>>,
-          public bit_eq <op <opc::move, T, U>>,
+    struct op <opc::move, ap::var<T>, ap::var<U>>
+        : public ari_eq <op <opc::move, ap::var<T>, ap::var<U>>>,
+          public bit_eq <op <opc::move, ap::var<T>, ap::var<U>>>,
 
-          public ari <op <opc::move, T, U>>,
-          public bit <op <opc::move, T, U>> {
-            T self;
-            U arg;
+          public ari <op <opc::move, ap::var<T>, ap::var<U>>>,
+          public bit <op <opc::move, ap::var<T>, ap::var<U>>> {
+            ap::var<T> self;
+            ap::var<U> arg;
 
-            op(T self, U arg)
-                : ari_eq<op <opc::move, T, U>>(*this),
-                  bit_eq<op <opc::move, T, U>>(*this),
+            op(ap::var<T> self, ap::var<U> arg)
+                : ari_eq<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
+                  bit_eq<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
 
-                  ari<op <opc::move, T, U>>(*this),
-                  bit<op <opc::move, T, U>>(*this),
+                  ari<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
+                  bit<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
 
                   self(self),
                   arg (arg)
@@ -70,15 +70,15 @@ namespace ap                          {
     };
 
     template <is::float_t T, std::integral U>
-    struct op <opc::move, T, U>
-        : public ari_eq <op <opc::move, T, U>>,
-          public ari    <op <opc::move, T, U>> {
-            T self;
-            U arg;
+    struct op <opc::move, ap::var<T>, ap::var<U>>
+        : public ari_eq <op <opc::move, ap::var<T>, ap::var<U>>>,
+          public ari    <op <opc::move, ap::var<T>, ap::var<U>>> {
+            ap::var<T> self;
+            ap::var<U> arg;
 
-            op(T self, U arg)
-                : ari_eq<op <opc::move, T, U>>(*this),
-                  ari   <op <opc::move, T, U>>(*this),
+            op(ap::var<T> self, ap::var<U> arg)
+                : ari_eq<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
+                  ari   <op <opc::move, ap::var<T>, ap::var<U>>>(*this),
 
                   self(self),
                   arg (arg)
@@ -87,21 +87,21 @@ namespace ap                          {
 
 
     template <is::int_t T, std::floating_point U >
-    struct op <opc::move, T, U>
-        : public ari_eq <op <opc::move, T, U>>,
-          public bit_eq <op <opc::move, T, U>>,
+    struct op <opc::move, ap::var<T>, ap::var<U>>
+        : public ari_eq <op <opc::move, ap::var<T>, ap::var<U>>>,
+          public bit_eq <op <opc::move, ap::var<T>, ap::var<U>>>,
 
-          public ari <op <opc::move, T, U>>,
-          public bit <op <opc::move, T, U>> {
-            T self;
-            U arg;
+          public ari <op <opc::move, ap::var<T>, ap::var<U>>>,
+          public bit <op <opc::move, ap::var<T>, ap::var<U>>> {
+            ap::var<T> self;
+            ap::var<U> arg;
 
-            op(T self, U arg)
-                : ari_eq<op <opc::move, T, U>>(*this),
-                  bit_eq<op <opc::move, T, U>>(*this),
+            op(ap::var<T> self, ap::var<U> arg)
+                : ari_eq<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
+                  bit_eq<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
 
-                  ari<op <opc::move, T, U>>(*this),
-                  bit<op <opc::move, T, U>>(*this),
+                  ari<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
+                  bit<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
 
                   self(self),
                   arg (arg)
@@ -109,15 +109,15 @@ namespace ap                          {
     };
 
     template <is::float_t T, std::floating_point U>
-    struct op <opc::move, T, U>
-        : public ari_eq <op <opc::move, T, U>>,
-          public ari    <op <opc::move, T, U>> {
-            T self;
-            U arg;
+    struct op <opc::move, ap::var<T>, ap::var<U>>
+        : public ari_eq <op <opc::move, ap::var<T>, ap::var<U>>>,
+          public ari    <op <opc::move, ap::var<T>, ap::var<U>>> {
+            ap::var<T> self;
+            ap::var<U> arg;
 
-            op(T self, U arg)
-                : ari_eq<op <opc::move, T, U>>(*this),
-                  ari   <op <opc::move, T, U>>(*this),
+            op(ap::var<T> self, ap::var<U> arg)
+                : ari_eq<op <opc::move, ap::var<T>, ap::var<U>>>(*this),
+                  ari   <op <opc::move, ap::var<T>, ap::var<U>>>(*this),
 
                   self(self),
                   arg (arg)
@@ -125,11 +125,11 @@ namespace ap                          {
     };
 
     template <is::pack_t T>
-    struct op <opc::move, T, T> {
-        T self;
+    struct op <opc::move, ap::var<T>, ap::var<T>> {
+        ap::var<T> self;
         T arg;
 
-        op (T self, T arg)
+        op (ap::var<T> self, ap::var<T> arg)
             : self (self),
               arg  (arg)
         {}
