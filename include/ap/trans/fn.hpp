@@ -88,8 +88,8 @@ namespace ap::trans                     {
 
                 if (!name.has_value()) return;
 
+                if (type.index() == 0) trait::arg (fn, std::get<0>(type), name.value());
                 if (type.index() == 1) trait::arg (fn, std::get<1>(type), name.value());
-                if (type.index() == 2) trait::arg (fn, std::get<2>(type), name.value());
     }
 
     template <typename T, typename... U>
