@@ -102,12 +102,14 @@ namespace ap::meta                                          {
             requires (C != opc::call)     {
                 arg.emplace_back (op.self);
                 arg.emplace_back (op.arg);
+                opcode = C;
         }
 
         template <opc C, typename T>             
         op(ap::op<C, T> op)
             requires (C != opc::call)    {
                 arg.emplace_back(op.self);
+                opcode = C;
         }
     };
 }
