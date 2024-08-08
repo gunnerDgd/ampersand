@@ -9,6 +9,8 @@
 #include <ap/meta/src.hpp>
 #include <ap/meta/fn.hpp>
 
+#include <ap/meta/src.hpp>
+#include <ap/meta/fn.hpp>
 #include <ap/core/fn.hpp>
 #include <string_view>
 
@@ -32,7 +34,7 @@ namespace ap::trans                     {
             if (!func.src.has_value()) return fn;
             auto& src = func.src.value();
 
-            for (auto& op : src.ops) this->ops (op);
+            for (auto& op : src.ops) this->src (op);
             return fn;
         }
 

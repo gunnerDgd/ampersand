@@ -190,7 +190,7 @@ namespace ap                                    {
         meta::src::push();
         func (arg...);
 
-        meta::src::push(meta::ret(ret));
+        meta::src::push(meta::ret());
         this->src = meta::src::pop();
         meta::src::push(*this);
     }
