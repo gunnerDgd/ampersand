@@ -3,13 +3,13 @@
 
 #include <ap/trans/trans.hpp>
 #include <ap/core/core.hpp>
+#include <ap/meta/meta.hpp>
 #include <ap/trait.hpp>
 
-#include "ope/func.hpp"
-#include "ope/var.hpp"
-#include "ope/num.hpp"
-#include "ope/op.hpp"
-
+#include <ap/meta/ope/func.hpp>
+#include <ap/meta/ope/var.hpp>
+#include <ap/meta/ope/num.hpp>
+#include <ap/meta/ope/op.hpp>
 
 #include <string_view>
 #include <type_traits>
@@ -18,9 +18,8 @@
 #include <optional>
 
 
-namespace ap::meta                                    {
-    class ope                                         {
-        using sub_t = std::variant<var, num, op, func>;
+namespace ap::meta                                          {
+    class ope                                               {
         template <typename... T> friend class trans::boolean;
         template <typename... T> friend class trans::func;
         template <typename... T> friend class trans::mem;
@@ -35,6 +34,7 @@ namespace ap::meta                                    {
         template <typename... T> friend class trans::op;
         template <typename... T> friend class trans::fn;
 
+        using sub_t = std::variant<var, num, op, func>;
         sub_t sub;
 
         friend std::optional<func> as_func(ope&);

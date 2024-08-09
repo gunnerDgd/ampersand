@@ -16,6 +16,8 @@ add_library              (
     ope/func.cpp
     ope/var.cpp
     ope/num.cpp
+    ope/op.cpp
+
     pack.cpp
     ope.cpp
     src.cpp

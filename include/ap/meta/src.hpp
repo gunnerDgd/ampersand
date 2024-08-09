@@ -34,8 +34,8 @@ namespace ap::meta                                    {
         template <typename T>    friend class bit_eq;
         template <typename T>    friend class move;
         template <typename T>    friend class call;
+        friend class meta::op;
 
-        template <typename... T> friend class trans::fn;
         using str_t = std::string_view;
 
         static void push(ap::meta::pack);

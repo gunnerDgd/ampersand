@@ -1,9 +1,8 @@
 #include <ap/meta/meta.hpp>
+#include <ap/meta/ope.hpp>
 
-#include <ap/meta/ope/op.hpp>
 #include <ap/meta/pack.hpp>
 #include <ap/meta/src.hpp>
-#include <ap/meta/ope.hpp>
 #include <ap/meta/fn.hpp>
 
 #include <stack>
@@ -71,7 +70,7 @@ namespace ap::meta                                  {
                 if (src.empty()) return;
 
                 auto& cur = src.top();
-                cur.fun.insert({ ap::meta::name(fn), fn});
+                cur.fun.insert({ ap::meta::name(fn), fn });
     }
 }
 

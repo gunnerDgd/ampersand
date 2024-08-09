@@ -25,6 +25,9 @@ add_library                         (
     ../../include/ap/core/ord.hpp
     ../../include/ap/core/cmp.hpp
 
+    ../../include/ap/core/loop.hpp
+    ../../include/ap/core/cond.hpp
+
     ../../include/ap/core/bool.hpp
     ../../include/ap/core/float.hpp
     ../../include/ap/core/int.hpp

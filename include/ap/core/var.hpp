@@ -23,6 +23,25 @@
 namespace ap                          {
     template <typename... T> class var;
 
+    template <is::bool_t T>
+    class var<T> 
+        : public boolean <var<T>>     {
+        using str_t = std::string_view;
+        
+        template <is::bool_t V> friend auto type(const ap::var<V>&);
+        template <is::bool_t V> friend auto name(const ap::var<V>&);
+        str_t name;
+
+    public:
+        var(T, str_t name)
+            : boolean <var<T>> (*this),
+              name (name)
+        {
+            meta::src::push (meta::push(*this));
+            meta::src::push (meta::var (*this));
+        }
+    };
+
     template <is::int_t T>
     class var<T> 
         : public ari_eq <var<T>>,

@@ -14,21 +14,14 @@
 #include "ops/ord.hpp"
 #include "ops/mem.hpp"
 
-namespace ap::trans                       {
+namespace ap::trans                              {
     template <typename T, typename... Arg>
-    class ops <T, Arg...> : public Arg... {
+    class ops <T, Arg...> : public Arg...        {
+        typename T::ret_t do_loop (ap::meta::op&);
+        typename T::ret_t do_cond (ap::meta::op&);
     public:
-        auto operator()(ap::meta::op op) {
-            auto  ops = T::ops();
-            auto& arg = op.arg;
-
-            auto pos = arg.begin();
-            this->self (ops, *pos);
-            this->opc  (ops, op.opcode);
-
-            for (++pos; pos != arg.end(); ++pos) this->arg (ops, *pos);
-            return ops;
-        }
+        using ret_t = typename T::ret_t;
+        ret_t operator()(ap::meta::op);
 
         void self(auto&&, std::floating_point auto);
         void self(auto&&, std::integral       auto);
@@ -54,6 +47,62 @@ namespace ap::trans                       {
     };
 
     template <typename T, typename... Arg> ops(T, Arg...) -> ops<T, Arg...>;
+}
+
+namespace ap::trans                      {
+    template <typename T, typename... Arg>
+    typename T::ret_t
+        ops <T, Arg...>::do_loop(ap::meta::op& op) {
+            auto  ops = T::ops();
+            auto& arg = op.arg;
+            auto& src = op.src;
+
+            if (!src.size()) return ops;
+            if (!arg.size()) return ops;
+            this->loop(ops);
+
+            for (auto& pos : arg) this->loop_arg(ops, pos);
+            for (auto& pos : src) this->loop_src(ops, (*this)(pos));
+            return     ops;
+    }
+
+    template <typename T, typename... Arg>
+    typename T::ret_t
+        ops <T, Arg...>::do_cond (ap::meta::op& op) {
+            ret_t ops = T::ops();
+            auto& arg = op.arg;
+            auto& src = op.src;
+
+            if (!src.size()) return ops;
+            if (!arg.size()) return ops;
+            this->cond(ops);
+
+            auto pos = arg.begin();
+            this->cond_arg(ops, *pos);
+
+            for (auto& spo : src) this->cond_src(ops, (*this)(spo));
+            pos++;
+
+            if (arg.size() == 2) this->cond_next (ops, (*this)(*pos));
+            return ops;
+    }
+
+    template <typename T, typename... Arg>
+    typename ops<T, Arg...>::ret_t
+        ops<T, Arg...>::operator()
+            (ap::meta::op op)                                     {
+                if (op.opcode == ap::opc::loop) return do_loop(op);
+                if (op.opcode == ap::opc::cond) return do_cond(op);
+                auto  ops = T::ops();
+                auto& arg = op.arg;
+
+                auto pos = arg.begin();
+                this->self (ops, *pos);
+                this->opc  (ops, op.opcode);
+
+                for (++pos; pos != arg.end(); ++pos) this->arg (ops, *pos);
+                return ops;
+    }
 }
 
 // For ap::trans::ops::opc

@@ -8,6 +8,8 @@
 #include <ap/core/core.hpp>
 #include <ap/meta/meta.hpp>
 
+#include <ap/meta/src.hpp>
+
 #include <ap/trait.hpp>
 
 
@@ -26,10 +28,12 @@ namespace ap::meta                                          {
         template <typename... T> friend class trans::ops;
         template <typename... T> friend class trans::op;
         template <typename... T> friend class trans::fn;
-        using arg_t = std::list<ope>;
+        opc opcode;
 
-        opc   opcode;
+        using arg_t = std::list<meta::ope>;
+        using src_t = std::list<meta::op>;
         arg_t arg;
+        src_t src;
 
         template <typename T, typename U>      friend op move(T, U);
         template <typename T>                  friend op push(T);
@@ -74,11 +78,14 @@ namespace ap::meta                                          {
         template <typename T, typename U>      friend op ord_gt(T, U);
         template <typename T, typename U>      friend op ord_ge(T, U);
 
+        op (ap::op<opc::cond>&);
+
         template <typename... T>
         op (opc opcode, T... ope)
             : opcode (opcode)               {
                 (arg.emplace_back(ope), ...);
         }
+
     public:
         template <typename F, typename... A>          
         op(ap::op<opc::call, F, A...> op)
@@ -99,17 +106,64 @@ namespace ap::meta                                          {
 
         template <opc C, typename T, typename U> 
         op(ap::op<C, T, U> op) 
-            requires (C != opc::call)     {
-                arg.emplace_back (op.self);
-                arg.emplace_back (op.arg);
-                opcode = C;
+            requires (C != opc::call)     
+                : opcode (C)                  {
+                    arg.emplace_back (op.self);
+                    arg.emplace_back (op.arg);
         }
 
         template <opc C, typename T>             
         op(ap::op<C, T> op)
-            requires (C != opc::call)    {
-                arg.emplace_back(op.self);
-                opcode = C;
+            requires (C != opc::call)    
+                : opcode (C)                 {
+                    arg.emplace_back(op.self);
+        }
+
+        template <typename T, typename U, typename V>
+        op(ap::op<opc::loop, T, U, V> op)
+            : opcode (opc::loop)         {
+                arg.emplace_back(op.stmt);
+                arg.emplace_back(op.cond);
+                arg.emplace_back(op.expr);
+
+                if (!op.src.has_value()) return;
+                auto& src = op.src.value();
+
+                for (auto& pos : src.ops) this->src.push_back(pos);
+        }
+
+        template <typename T>
+        op(ap::op<opc::loop, T> op)
+            : opcode (opc::loop)         {
+                arg.emplace_back(op.cond);
+
+                if (!op.src.has_value()) return;
+                auto& src = op.src.value();
+
+                for (auto& pos : src.ops) this->src.push_back(pos);
+        }
+
+        template <typename T, typename U>
+        op (ap::op<opc::cond, T, U> op) 
+            : opcode (opc::cond)          {
+                arg.emplace_back (op.cond);
+                arg.emplace_back (op.next);
+
+                if (!op.src.has_value()) return;
+                auto& src = op.src.value();
+
+                for (auto& pos : src.ops) this->src.push_back(pos);
+        }
+
+        template <typename T>
+        op (ap::op<opc::cond, T> op) 
+            : opcode (opc::cond)          {
+                arg.emplace_back (op.cond);
+
+                if (!op.src.has_value()) return;
+                auto& src = op.src.value();
+
+                for (auto& pos : src.ops) this->src.push_back(pos);
         }
     };
 }
