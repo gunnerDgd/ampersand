@@ -58,6 +58,10 @@ namespace ap::meta                                          {
         ope(op&);
 
         template <typename T, typename U> ope(ap::var<T, U> arg) : sub (var (arg)) {}
+
+        template <is::pack_t T>           ope(ap::var<T[]>  arg) : sub (var (arg)) {}
+        template <is::num_t  T>           ope(ap::var<T[]>  arg) : sub (var (arg)) {}
+
         template <is::pack_t T>           ope(ap::var<T>    arg) : sub (var (arg)) {}
         template <is::num_t  T>           ope(ap::var<T>    arg) : sub (var (arg)) {}
 
