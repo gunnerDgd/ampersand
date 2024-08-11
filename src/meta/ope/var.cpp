@@ -25,4 +25,9 @@ namespace ap::meta                      {
             if (!type.empty()) return type;
             return idx;
     }
+
+    std::uint64_t
+        len(var& self)     {
+            return self.len;
+    }
 }
