@@ -1,6 +1,7 @@
 #ifndef AP_TRANS_OPS_HPP
 #define AP_TRANS_OPS_HPP
 
+#include <ap/trans/trans.hpp>
 #include <ap/meta/meta.hpp>
 #include <ap/core/core.hpp>
 
@@ -14,289 +15,186 @@
 #include "ops/ord.hpp"
 #include "ops/mem.hpp"
 
-namespace ap::trans                              {
-    template <typename T, typename... Arg>
-    class ops <T, Arg...> : public Arg...        {
-        typename T::ret_t do_loop (ap::meta::op&);
-        typename T::ret_t do_cond (ap::meta::op&);
+namespace ap::trans                                {
+    template <typename... Arg>
+    class ops : public Arg...                      {
     public:
-        using ret_t = typename T::ret_t;
-        ret_t operator()(ap::meta::op);
+        auto  operator()(ap::meta::op);
 
-        void self(auto&&, std::floating_point auto);
-        void self(auto&&, std::integral       auto);
+        void  arg(auto&&, std::floating_point auto);
+        void  arg(auto&&, std::integral       auto);
 
-        void self(auto&&, ap::meta::func);
-        void self(auto&&, ap::meta::ope&);
-        void self(auto&&, ap::meta::var);
-        void self(auto&&, ap::meta::num);
-        void self(auto&&, ap::meta::op);
+        void  arg(auto&&, ap::meta::func);
+        void  arg(auto&&, ap::meta::ope&);
+        void  arg(auto&&, ap::meta::var);
+        void  arg(auto&&, ap::meta::num);
+        void  arg(auto&&, ap::meta::op);
 
-        void arg(auto&&, std::floating_point auto);
-        void arg(auto&&, std::integral       auto);
+        void  src(auto&&, ap::meta::op&);
+        auto  opc(ap::opc);
 
-        void arg(auto&&, ap::meta::func);
-        void arg(auto&&, ap::meta::ope&);
-        void arg(auto&&, ap::meta::var);
-        void arg(auto&&, ap::meta::num);
-        void arg(auto&&, ap::meta::op);
-
-        void opc(auto&&, ap::opc);
-
-        ops (T, Arg...) : Arg()... {}
+        ops (Arg...) : Arg()... {}
     };
 
-    template <typename T, typename... Arg> ops(T, Arg...) -> ops<T, Arg...>;
+    template <typename... Arg> ops(Arg...) -> ops<Arg...>;
 }
 
-namespace ap::trans                      {
-    template <typename T, typename... Arg>
-    typename T::ret_t
-        ops <T, Arg...>::do_loop(ap::meta::op& op) {
-            auto  ops = T::ops();
-            auto& arg = op.arg;
-            auto& src = op.src;
-
-            if (!src.size()) return ops;
-            if (!arg.size()) return ops;
-            this->loop(ops);
-
-            for (auto& pos : arg) this->loop_arg(ops, pos);
-            for (auto& pos : src) this->loop_src(ops, (*this)(pos));
-            return     ops;
-    }
-
-    template <typename T, typename... Arg>
-    typename T::ret_t
-        ops <T, Arg...>::do_cond (ap::meta::op& op) {
-            ret_t ops = T::ops();
-            auto& arg = op.arg;
-            auto& src = op.src;
-
-            if (!src.size()) return ops;
-            if (!arg.size()) return ops;
-            this->cond(ops);
-
-            auto pos = arg.begin();
-            this->cond_arg(ops, *pos);
-
-            for (auto& spo : src) this->cond_src(ops, (*this)(spo));
-            pos++;
-
-            if (arg.size() == 2) this->cond_next (ops, (*this)(*pos));
-            return ops;
-    }
-
-    template <typename T, typename... Arg>
-    typename ops<T, Arg...>::ret_t
-        ops<T, Arg...>::operator()
-            (ap::meta::op op)                                     {
-                if (op.opcode == ap::opc::loop) return do_loop(op);
-                if (op.opcode == ap::opc::cond) return do_cond(op);
-                auto  ops = T::ops();
+namespace ap::trans                             {
+    template <typename... Arg>
+    auto
+        ops<Arg...>::operator()
+            (ap::meta::op op)                   {
+                auto  ops = this->opc(op.opcode);
                 auto& arg = op.arg;
-
-                auto pos = arg.begin();
-                this->self (ops, *pos);
-                this->opc  (ops, op.opcode);
-
-                for (++pos; pos != arg.end(); ++pos) this->arg (ops, *pos);
-                return ops;
+                auto& src = op.src;
+                
+                for (auto& pos : arg) this->arg (ops, pos);
+                for (auto& pos : src) this->src (ops, pos);
+                return     ops;
     }
 }
 
 // For ap::trans::ops::opc
-namespace ap::trans                                                  {
-    template <typename T, typename... Arg>
-    void
-        ops<T, Arg...>::opc
-            (auto&& op, ap::opc opc)                                 {
-                switch (opc)                                         {
-                    case opc::move:       this->move      (op); break;
-                    case opc::push:       this->push      (op); break;
-                    case opc::pop:        this->pop       (op); break;
+namespace ap::trans                                                {
+    template <typename... Arg>
+    auto
+        ops<Arg...>::opc
+            (ap::opc opc)                                          {
+                switch (opc)                                       {
+                    case opc::move:       return this->move      ();
+                    case opc::push:       return this->push      ();
+                    case opc::pop:        return this->pop       ();
+                    case opc::idx:        return this->idx       ();
 
-                    case opc::call:       this->call      (op); break;
-                    case opc::ret:        this->ret       (op); break;
+                    case opc::call:       return this->call      ();
+                    case opc::ret:        return this->ret       ();
 
-                    case opc::add_eq:     this->add_eq    (op); break;
-                    case opc::sub_eq:     this->sub_eq    (op); break;
-                    case opc::mul_eq:     this->mul_eq    (op); break;
-                    case opc::div_eq:     this->div_eq    (op); break;
-                    case opc::mod_eq:     this->mod_eq    (op); break;
+                    case opc::add_eq:     return this->add_eq    ();
+                    case opc::sub_eq:     return this->sub_eq    ();
+                    case opc::mul_eq:     return this->mul_eq    ();
+                    case opc::div_eq:     return this->div_eq    ();
+                    case opc::mod_eq:     return this->mod_eq    ();
 
-                    case opc::add:        this->add       (op); break;
-                    case opc::sub:        this->sub       (op); break;
-                    case opc::mul:        this->mul       (op); break;
-                    case opc::div:        this->div       (op); break;
-                    case opc::mod:        this->mod       (op); break;
+                    case opc::add:        return this->add       ();
+                    case opc::sub:        return this->sub       ();
+                    case opc::mul:        return this->mul       ();
+                    case opc::div:        return this->div       ();
+                    case opc::mod:        return this->mod       ();
 
-                    case opc::bit_and:    this->bit_and   (op); break;
-                    case opc::bit_or:     this->bit_or    (op); break;
-                    case opc::bit_xor:    this->bit_xor   (op); break;
-                    case opc::bit_not:    this->bit_not   (op); break;
+                    case opc::bit_and:    return this->bit_and   ();
+                    case opc::bit_or:     return this->bit_or    ();
+                    case opc::bit_xor:    return this->bit_xor   ();
+                    case opc::bit_not:    return this->bit_not   ();
 
-                    case opc::bit_shl:    this->bit_shl   (op); break;
-                    case opc::bit_shr:    this->bit_shr   (op); break;
+                    case opc::bit_shl:    return this->bit_shl   ();
+                    case opc::bit_shr:    return this->bit_shr   ();
     
-                    case opc::bit_and_eq: this->bit_and_eq(op); break;
-                    case opc::bit_or_eq:  this->bit_or_eq (op); break;
-                    case opc::bit_xor_eq: this->bit_xor_eq(op); break;
+                    case opc::bit_and_eq: return this->bit_and_eq();
+                    case opc::bit_or_eq:  return this->bit_or_eq ();
+                    case opc::bit_xor_eq: return this->bit_xor_eq();
 
-                    case opc::bool_and:   this->bool_and  (op); break;
-                    case opc::bool_or :   this->bool_or   (op); break;
-                    case opc::bool_not:   this->bool_not  (op); break;
+                    case opc::bool_and:   return this->bool_and  ();
+                    case opc::bool_or :   return this->bool_or   ();
+                    case opc::bool_not:   return this->bool_not  ();
 
-                    case opc::cmp_eq:     this->cmp_eq    (op); break;
-                    case opc::cmp_ne:     this->cmp_ne    (op); break;
+                    case opc::cmp_eq:     return this->cmp_eq    ();
+                    case opc::cmp_ne:     return this->cmp_ne    ();
 
-                    case opc::ord_lt:     this->ord_lt    (op); break;
-                    case opc::ord_le:     this->ord_le    (op); break;
-                    case opc::ord_gt:     this->ord_gt    (op); break;
-                    case opc::ord_ge:     this->ord_ge    (op); break;
+                    case opc::ord_lt:     return this->ord_lt    ();
+                    case opc::ord_le:     return this->ord_le    ();
+                    case opc::ord_gt:     return this->ord_gt    ();
+                    case opc::ord_ge:     return this->ord_ge    ();
+
+                    case opc::loop_while: return this->loop_while();
+                    case opc::loop_for:   return this->loop_for  ();
+                    case opc::cond:       return this->cond      ();
             }
     }
 }
 
-// For ap::trans::ops::self
-namespace ap::trans                                  {
-    template <typename T, typename... Arg>
-    void
-        ops<T, Arg...>::self
-            (auto&& op, std::floating_point auto self) {
-                T::self(op, self);
-    }
-
-    template <typename T, typename... Arg>
-    void
-        ops<T, Arg...>::self
-            (auto&& op, std::integral auto self) {
-                T::self(op, self);
-    }
-
-    template <typename T, typename... Arg>
-    void
-        ops<T, Arg...>::self
-            (auto&& op, ap::meta::func self)                          {
-                T::self(op, meta::type_id::func, ap::meta::name(self));
-    }
-
-    template <typename T, typename... Arg>
-    void
-        ops<T, Arg...>::self
-            (auto&& op, ap::meta::var self)    {
-                auto type = ap::meta::type(self);
-                auto name = ap::meta::name(self);
-                
-                if (type.index() == 0) T::self(op, std::get<0>(type), name.value());
-                if (type.index() == 1) T::self(op, std::get<1>(type), name.value());
-    }
-
-    template <typename T, typename... Arg>
-    void
-        ops<T, Arg...>::self
-            (auto&& op, ap::meta::op self)  {
-                T::self(op, (*this)(self));
-    }
-
-    template <typename T, typename... Arg>
-    void
-        ops<T, Arg...>::self
-            (auto&& op, ap::meta::ope& self)                                                      {
-                switch (ap::meta::type(self))                                                     {
-                    case meta::ope::type::func: this->self(op, meta::as_func(self).value()); break;
-                    case meta::ope::type::var:  this->self(op, meta::as_var (self).value()); break;
-                    case meta::ope::type::num:  this->self(op, meta::as_num (self).value()); break;
-                    case meta::ope::type::op:   this->self(op, meta::as_op  (self).value()); break;
-                }
-    }
-
-    template <typename T, typename... Arg>
-    void
-        ops<T, Arg...>::self
-            (auto&& op, ap::meta::num self)                                        {
-                switch (ap::meta::type(self))                                      {
-                    case meta::type_id::f64: T::self(op, meta::as_f64(self)); break;
-                    case meta::type_id::f32: T::self(op, meta::as_f32(self)); break;
-
-                    case meta::type_id::u64: T::self(op, meta::as_u64(self)); break;
-                    case meta::type_id::u32: T::self(op, meta::as_u32(self)); break;
-                    case meta::type_id::u16: T::self(op, meta::as_u16(self)); break;
-                    case meta::type_id::u8 : T::self(op, meta::as_u8 (self)); break;
-
-                    case meta::type_id::i64: T::self(op, meta::as_i64(self)); break;
-                    case meta::type_id::i32: T::self(op, meta::as_i32(self)); break;
-                    case meta::type_id::i16: T::self(op, meta::as_i16(self)); break;
-                    case meta::type_id::i8 : T::self(op, meta::as_i8 (self)); break;
-                }
-    }
-
-}
-
 // For ap::trans::ops::arg
-namespace ap::trans                                                              {
-    template <typename T, typename... Arg>
+namespace ap::trans                                                          {
+    template <typename... Arg>
     void
-        ops<T, Arg...>::arg
-            (auto&& op, ap::meta::num arg)                                       {
-                switch (ap::meta::type(arg))                                     {
-                    case meta::type_id::f64: T::arg(op, meta::as_f64(arg)); break;
-                    case meta::type_id::f32: T::arg(op, meta::as_f32(arg)); break;
+        ops<Arg...>::arg
+            (auto&& op, ap::meta::num arg)                                   {
+                switch (ap::meta::type(arg))                                 {
+                    case meta::type_id::f64: op.arg(meta::as_f64(arg)); break;
+                    case meta::type_id::f32: op.arg(meta::as_f32(arg)); break;
 
-                    case meta::type_id::u64: T::arg(op, meta::as_u64(arg)); break;
-                    case meta::type_id::u32: T::arg(op, meta::as_u32(arg)); break;
-                    case meta::type_id::u16: T::arg(op, meta::as_u16(arg)); break;
-                    case meta::type_id::u8 : T::arg(op, meta::as_u8 (arg)); break;
+                    case meta::type_id::u64: op.arg(meta::as_u64(arg)); break;
+                    case meta::type_id::u32: op.arg(meta::as_u32(arg)); break;
+                    case meta::type_id::u16: op.arg(meta::as_u16(arg)); break;
+                    case meta::type_id::u8 : op.arg(meta::as_u8 (arg)); break;
 
-                    case meta::type_id::i64: T::arg(op, meta::as_i64(arg)); break;
-                    case meta::type_id::i32: T::arg(op, meta::as_i32(arg)); break;
-                    case meta::type_id::i16: T::arg(op, meta::as_i16(arg)); break;
-                    case meta::type_id::i8 : T::arg(op, meta::as_i8 (arg)); break;
+                    case meta::type_id::i64: op.arg(meta::as_i64(arg)); break;
+                    case meta::type_id::i32: op.arg(meta::as_i32(arg)); break;
+                    case meta::type_id::i16: op.arg(meta::as_i16(arg)); break;
+                    case meta::type_id::i8 : op.arg(meta::as_i8 (arg)); break;
                 }
     }
 
-    template <typename T, typename... Arg>
+    template <typename... Arg>
     void
-        ops<T, Arg...>::arg
+        ops<Arg...>::arg
             (auto&& op, std::floating_point auto arg) {
-                T::arg(op, arg);
+                op.arg(op, arg);
     }
 
-    template <typename T, typename... Arg>
+    template <typename... Arg>
     void
-        ops<T, Arg...>::arg
+        ops<Arg...>::arg
             (auto&& op, std::integral auto arg) {
-                T::arg(op, arg);
+                op.arg (op, arg);
     }
 
-    template <typename T, typename... Arg>
+    template <typename... Arg>
     void
-        ops<T, Arg...>::arg
-            (auto&& op, ap::meta::func arg)                          {
-                T::arg (op, meta::type_id::func, ap::meta::name(arg));
+        ops<Arg...>::arg
+            (auto&& op, ap::meta::func arg)                      {
+                op.arg (meta::type_id::func, ap::meta::name(arg));
     }
 
-    template <typename T, typename... Arg>
+    template <typename... Arg>
     void
-        ops<T, Arg...>::arg
+        ops<Arg...>::arg
             (auto&& op, ap::meta::var arg)     {
                 auto type = ap::meta::type(arg);
                 auto name = ap::meta::name(arg);
 
-                if (type.index() == 0) T::arg(op, std::get<0>(type), name.value());
-                if (type.index() == 1) T::arg(op, std::get<1>(type), name.value());
+                auto self = ap::meta::self(arg);
+                auto len  = ap::meta::len (arg);
+                if (!name.has_value()) return;
+
+                if (type.index() == 0) goto do_pack;
+                if (type.index() == 1) goto do_num;
+                return;
+
+    do_pack:    if (!self.has_value() && len >  1) op.arg (std::get<0>(type), len, name.value());
+                if (!self.has_value() && len == 1) op.arg (std::get<0>(type),      name.value());
+
+                if (self.has_value() && len >  1)  op.arg (std::get<0>(type), len, name.value(), self.value());
+                if (self.has_value() && len == 1)  op.arg (std::get<0>(type),      name.value(), self.value());
+                return;
+
+    do_num:     if (!self.has_value() && len >  1) op.arg (std::get<1>(type), len, name.value());
+                if (!self.has_value() && len == 1) op.arg (std::get<1>(type),      name.value());
+
+                if (self.has_value() && len >  1)  op.arg (std::get<1>(type), len, name.value(), self.value());
+                if (self.has_value() && len == 1)  op.arg (std::get<1>(type),      name.value(), self.value());
+                return;
     }
 
-    template <typename T, typename... Arg>
+    template <typename... Arg>
     void
-        ops<T, Arg...>::arg
-            (auto&& op, ap::meta::op arg)  {
-                T::arg(op, (*this)(arg));
+        ops<Arg...>::arg
+            (auto&& op, ap::meta::op arg) {
+                op.arg((*this)(arg));
     }
 
-    template <typename T, typename... Arg>
+    template <typename... Arg>
     void
-        ops<T, Arg...>::arg
+        ops<Arg...>::arg
             (auto&& op, ap::meta::ope& arg)                                                     {
                 switch (ap::meta::type(arg))                                                    {
                     case meta::ope::type::func: this->arg(op, meta::as_func(arg).value()); break;
@@ -306,4 +204,15 @@ namespace ap::trans                                                             
                 }
     }
 }
+
+namespace ap::trans                        {
+    template <typename... Arg>
+    void  
+        ops<Arg...>::src
+            (auto&& op, ap::meta::op& src) {
+                op.src ((*this)(src));
+    }
+
+}
+
 #endif
