@@ -28,6 +28,8 @@ namespace ap::meta                                          {
         template <typename... T> friend class trans::ops;
         template <typename... T> friend class trans::op;
         template <typename... T> friend class trans::fn;
+        friend class ope;
+
         opc opcode;
 
         using arg_t = std::list<meta::ope>;
@@ -120,8 +122,8 @@ namespace ap::meta                                          {
         }
 
         template <typename T, typename U, typename V>
-        op(ap::op<opc::loop, T, U, V> op)
-            : opcode (opc::loop)         {
+        op(ap::op<opc::loop_for, T, U, V> op)
+            : opcode (opc::loop_for)     {
                 arg.emplace_back(op.stmt);
                 arg.emplace_back(op.cond);
                 arg.emplace_back(op.expr);
@@ -133,8 +135,8 @@ namespace ap::meta                                          {
         }
 
         template <typename T>
-        op(ap::op<opc::loop, T> op)
-            : opcode (opc::loop)         {
+        op(ap::op<opc::loop_while, T> op)
+            : opcode (opc::loop_while)   {
                 arg.emplace_back(op.cond);
 
                 if (!op.src.has_value()) return;
