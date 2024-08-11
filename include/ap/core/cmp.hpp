@@ -1,10 +1,8 @@
 #ifndef AP_CMP_HPP
 #define AP_CMP_HPP
 
+#include <ap/core/operator.hpp>
 #include <ap/trait.hpp>
-#include <ap/core/operator/boolean.hpp>
-#include <ap/core/operator/ord.hpp>
-#include <ap/core/operator/cmp.hpp>
 
 namespace ap                                {
     template <opc C, can::cmp T, can::cmp U>

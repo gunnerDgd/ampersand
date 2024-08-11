@@ -1,11 +1,7 @@
 #ifndef AP_CALL_HPP
 #define AP_CALL_HPP
 
-#include <ap/core/operator/ari.hpp>
-#include <ap/core/operator/bit.hpp>
-#include <ap/core/operator/boolean.hpp>
-#include <ap/core/operator/cmp.hpp>
-#include <ap/core/operator/ord.hpp>
+#include <ap/core/operator.hpp>
 
 #include <ap/core/fn.hpp>
 #include <ap/trait.hpp>

@@ -2,9 +2,7 @@
 #define AP_ARI_HPP
 
 #include <ap/trait.hpp>
-
-#include <ap/core/operator/ari.hpp>
-#include <ap/core/operator/bit.hpp>
+#include <ap/core/operator.hpp>
 
 namespace ap                                {
     template <opc C, can::ari T, can::ari U> 

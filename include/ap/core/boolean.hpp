@@ -1,9 +1,8 @@
 #ifndef AP_BOOLEAN_HPP
 #define AP_BOOLEAN_HPP
 
+#include <ap/core/operator.hpp>
 #include <ap/trait.hpp>
-
-#include <ap/core/operator/boolean.hpp>
 
 namespace ap                                        {
     template <opc C, can::boolean T, can::boolean U>
