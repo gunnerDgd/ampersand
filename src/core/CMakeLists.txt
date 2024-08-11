@@ -11,6 +11,9 @@ add_library                 (
     ../../include/ap/core/operator/cmp.hpp
     ../../include/ap/core/operator/move.hpp
     ../../include/ap/core/operator/call.hpp
+    ../../include/ap/core/operator/idx.hpp
+
+    ../../include/ap/core/operator.hpp
 )
 
 add_library                         (
@@ -24,6 +27,7 @@ add_library                         (
     ../../include/ap/core/move.hpp
     ../../include/ap/core/ord.hpp
     ../../include/ap/core/cmp.hpp
+    ../../include/ap/core/idx.hpp
 
     ../../include/ap/core/loop.hpp
     ../../include/ap/core/cond.hpp
