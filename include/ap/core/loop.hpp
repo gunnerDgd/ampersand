@@ -10,7 +10,7 @@ namespace ap                                            {
     // This is matched into for loop
     template <is::op_t S, is::op_t C, is::op_t E>
         requires can::move<ap::var<ap::types::bool_t>, C>
-    struct op<opc::loop, S, C, E>                       {
+    struct op<opc::loop_for, S, C, E>                   {
         using  cond_t = C;
         using  stmt_t = S;
         using  expr_t = E;
@@ -30,6 +30,7 @@ namespace ap                                            {
                 func();
                 
                 src = meta::src::pop();
+                meta::src::pop ();
                 meta::src::push(*this);
         }
     };
@@ -37,7 +38,7 @@ namespace ap                                            {
     // This is matched into while loop
      template <is::op_t C>
          requires can::move<ap::var<ap::types::bool_t>, C>
-    struct op<opc::loop, C>                              {
+    struct op<opc::loop_while, C>                        {
         using src_t = std::optional<meta::src>;
         src_t src;
 
@@ -50,6 +51,7 @@ namespace ap                                            {
                 func();
                 
                 src = meta::src::pop();
+                meta::src::pop();
                 meta::src::push(*this);
         }
     };
