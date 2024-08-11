@@ -11,8 +11,8 @@ namespace ap::details                                                   {
 
 namespace ap                                                                       {
     template <is::op_t C>
-    auto If(C cond)           {
-        return [=](auto func) {
+    auto If(C cond)                                                                {
+        return [=](auto func)                                                      {
             // One For Only If(...)
             auto If1 = [=]()                           {
                 auto ret = op<opc::cond, C>(cond, func);
@@ -30,8 +30,8 @@ namespace ap                                                                    
     }
 
     template <is::op_t C>
-    auto ElseIf(C cond)      {
-        return [=](auto func) {
+    auto ElseIf(C cond)                                                           {
+        return [=](auto func)                                                     {
             // One For Only If(...)
             auto If1 = [=]()                           {
                 auto ret = op<opc::cond, C>(cond, func);
