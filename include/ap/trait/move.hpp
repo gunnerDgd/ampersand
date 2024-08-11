@@ -70,6 +70,8 @@ namespace ap::can::details                           {
         : std::true_type
             {};
 
+    
+
     template <is::num_t T, ap::opc C, typename... U>
         requires is::opc::bit<C>
     struct move <ap::var<T>, ap::op<C, U...>>
@@ -81,6 +83,30 @@ namespace ap::can::details                           {
     struct move <ap::var<T>, ap::op<C, U...>>
         : std::true_type
             {};
+
+
+
+    template <is::num_t T, is::num_t U, typename V>
+    struct move <ap::var<T>, ap::op<opc::idx, ap::var<U[]>, V>>
+        : std::true_type
+            {};
+
+    template <is::bool_t T, is::bool_t U, typename V>
+    struct move <ap::var<T>, ap::op<opc::idx, ap::var<U[]>, V>>
+        : std::true_type
+            {};
+
+    template <is::num_t T, is::num_t U, typename V>
+    struct move <ap::op<opc::idx, ap::var<T[]>, V>, ap::var<U>>
+        : std::true_type
+            {};
+
+    template <is::bool_t T, is::bool_t U, typename V>
+    struct move <ap::op<opc::idx, ap::var<T[]>, V>, ap::var<U>>
+        : std::true_type
+            {};
+
+
 
     template <is::bool_t T, ap::opc C, typename... U>
         requires is::opc::cmp<C>
