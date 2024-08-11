@@ -1,10 +1,11 @@
-#include "ap/core.hpp"
-#include "ap/meta.hpp"
+#include <ap/core.hpp>
+#include <ap/meta.hpp>
+#include <ap/grammar.hpp>
 
 #include <iostream>
 
-int main()                   {
-    ap::var a { ap::i8, "a" };
+int main()                     {
+    ap::var a { ap::i8_t, "a" };
     auto b = a + 3 + 4;
     auto c = ~a;
 

@@ -1,7 +1,8 @@
 #include <iostream>
 
-#include "ap/core.hpp"
-#include "ap/meta.hpp"
+#include <ap/core.hpp>
+#include <ap/meta.hpp>
+#include <ap/grammar.hpp>
 
 struct MyPack                             {
     static auto name() { return "MyPack"; }

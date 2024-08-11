@@ -1,5 +1,6 @@
 #include <ap/core.hpp>
 #include <ap/meta.hpp>
+#include <ap/grammar.hpp>
 #include <iostream>
 
 void test1()                         {
@@ -11,8 +12,8 @@ auto test2(ap::var<ap::types::i64_t>) {
 }
 
 int main()                                          {
-    auto fn1 = ap::func()         ()("test1", test1);
-    auto fn2 = ap::func(ap::i32_t)(ap::let(ap::i64_t)("arg1"))("test2", test2);
+    auto fn1 = ap::Fn()         ()("test1", test1);
+    auto fn2 = ap::Fn(ap::i32_t)(ap::let(ap::i64_t)("arg1"))("test2", test2);
     auto op1 = fn1();
     auto op2 = fn2(3);
 
