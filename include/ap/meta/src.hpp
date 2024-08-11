@@ -9,12 +9,17 @@
 #include <unordered_map>
 #include <list>
 
+namespace ap  {
+    auto For();
+}
 
-namespace ap::meta                                    {
-    class src                                         {
-        template <typename... T> friend class ap::pack;
-        template <typename... T> friend class ap::var;
-        template <typename... T> friend class ap::fn;
+
+namespace ap::meta                                            {
+    class src                                                 {
+        template <opc C, typename... T> friend struct ap::op;
+        template <typename... T>        friend class  ap::pack;
+        template <typename... T>        friend class  ap::var;
+        template <typename... T>        friend class  ap::fn;
 
         template <typename... T> friend class trans::boolean;
         template <typename... T> friend class trans::func;
@@ -37,16 +42,6 @@ namespace ap::meta                                    {
         friend class meta::op;
 
         using str_t = std::string_view;
-
-        static void push(ap::meta::pack);
-        static void push(ap::meta::var);
-        static void push(ap::meta::op);
-        static void push(ap::meta::fn);
-        static void push();
-
-        static std::optional<src> capture();
-        static std::optional<src> pop    ();
-
         src();
 
         using pack_t = std::unordered_map<str_t, ap::meta::pack>;
@@ -57,6 +52,15 @@ namespace ap::meta                                    {
         fun_t  fun;
         var_t  var;
         ops_t  ops;
+    public:
+        static void push(ap::meta::pack);
+        static void push(ap::meta::var);
+        static void push(ap::meta::op);
+        static void push(ap::meta::fn);
+        static void push();
+
+        static std::optional<src> capture();
+        static std::optional<src> pop    ();
     };
 }
 
