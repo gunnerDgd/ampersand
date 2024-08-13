@@ -14,7 +14,7 @@ namespace ap::trans                                         {
         using str_t = std::string_view;
         using trait = Trait;
     public:
-        auto operator()(meta::var&);
+        auto operator()(meta::var);
         auto pack(str_t, str_t);
 
         auto f64 (str_t);
@@ -58,34 +58,36 @@ namespace ap::trans                                                           {
     template <typename T>
     auto
         var<T>::operator()
-            (ap::meta::var& var)                                              {
+            (ap::meta::var var)                                               {
                 auto type = ap::meta::type (var);
                 auto name = ap::meta::name (var);
 
+                if (!name.has_value()) return T::err();
                 if (type.index() == 0) goto pack;
                 if (type.index() == 1) goto num;
-                return trait::err();
+                return T::err();
 
-        pack:   return pack(std::get<0>(type), name);
+        pack:   return pack(std::get<0>(type), name.value());
         num:    auto idx  = std::get<1>(type);
 
-                switch (idx)                                                  {
-                    case meta::type_id::f64: return f64 (ap::meta::name (var));
-                    case meta::type_id::f32: return f32 (ap::meta::name (var));
+                switch (idx)                                          {
+                    case meta::type_id::f64: return f64 (name.value());
+                    case meta::type_id::f32: return f32 (name.value());
 
-                    case meta::type_id::u64: return u64 (ap::meta::name (var));
-                    case meta::type_id::i64: return i64 (ap::meta::name (var));
+                    case meta::type_id::u64: return u64 (name.value());
+                    case meta::type_id::i64: return i64 (name.value());
 
-                    case meta::type_id::u32: return u32 (ap::meta::name (var));
-                    case meta::type_id::i32: return i32 (ap::meta::name (var));
+                    case meta::type_id::u32: return u32 (name.value());
+                    case meta::type_id::i32: return i32 (name.value());
 
-                    case meta::type_id::u16: return u16 (ap::meta::name (var));
-                    case meta::type_id::i16: return i16 (ap::meta::name (var));
+                    case meta::type_id::u16: return u16 (name.value());
+                    case meta::type_id::i16: return i16 (name.value());
 
-                    case meta::type_id::u8 : return u8  (ap::meta::name (var));
-                    case meta::type_id::i8 : return i8  (ap::meta::name (var));
-                    default                : return trait::err();
+                    case meta::type_id::u8 : return u8  (name.value());
+                    case meta::type_id::i8 : return i8  (name.value());
                 }
+
+                return T::err();
     }
 }
 
