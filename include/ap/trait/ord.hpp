@@ -23,9 +23,12 @@ namespace ap::is::details                                {
             {};
 }
 
-namespace ap::is {
+namespace ap::is                                              {
     template <typename T> concept ord = details::ord<T>::value;
 }
+
+
+
 
 namespace ap                          {
     template <typename... T> class var;

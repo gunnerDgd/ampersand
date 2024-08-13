@@ -7,7 +7,7 @@
 #include <ap/core/operator/ari.hpp>
 #include <ap/core/operator/bit.hpp>
 
-namespace ap                          {
+namespace ap                                                    {
     template <is::int_t T, typename U>
         requires can::move <ap::var<T>, U>
     struct op <opc::move, ap::var<T>, U>                        
@@ -56,7 +56,7 @@ namespace ap                          {
         op (ap::var<T> self, ap::var<T> arg)
             : self (self),
               arg  (arg)
-        {}
+                {}
     };
 }
 

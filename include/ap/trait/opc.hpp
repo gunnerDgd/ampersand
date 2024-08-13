@@ -72,11 +72,15 @@ namespace ap::is::opc::details                              {
     template <ap::opc C> struct ord     : std::false_type {};
     template <ap::opc C> struct cmp     : std::false_type {};
 
+
+
     template <> struct ari_eq <ap::opc::add_eq> : std::true_type {};
     template <> struct ari_eq <ap::opc::sub_eq> : std::true_type {};
     template <> struct ari_eq <ap::opc::mul_eq> : std::true_type {};
     template <> struct ari_eq <ap::opc::div_eq> : std::true_type {};
     template <> struct ari_eq <ap::opc::mod_eq> : std::true_type {};
+
+
 
     template <> struct ari <ap::opc::add> : std::true_type {};
     template <> struct ari <ap::opc::sub> : std::true_type {};
@@ -85,9 +89,12 @@ namespace ap::is::opc::details                              {
     template <> struct ari <ap::opc::mod> : std::true_type {};
 
 
+
     template <> struct bit_eq <ap::opc::bit_and_eq> : std::true_type {};
     template <> struct bit_eq <ap::opc::bit_or_eq>  : std::true_type {};
     template <> struct bit_eq <ap::opc::bit_xor_eq> : std::true_type {};
+
+
 
     template <> struct bit <ap::opc::bit_and> : std::true_type {};
     template <> struct bit <ap::opc::bit_or>  : std::true_type {};
@@ -97,12 +104,18 @@ namespace ap::is::opc::details                              {
     template <> struct bit <ap::opc::bit_shl> : std::true_type {};
     template <> struct bit <ap::opc::bit_shr> : std::true_type {};
 
+
+
     template <> struct boolean <ap::opc::bool_and> : std::true_type {};
     template <> struct boolean <ap::opc::bool_not> : std::true_type {};
     template <> struct boolean <ap::opc::bool_or>  : std::true_type {};
 
+
+
     template <> struct cmp <ap::opc::cmp_eq> : std::true_type {};
     template <> struct cmp <ap::opc::cmp_ne> : std::true_type {};
+
+
 
     template <> struct ord <ap::opc::ord_gt> : std::true_type {};
     template <> struct ord <ap::opc::ord_ge> : std::true_type {};
