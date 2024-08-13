@@ -7,12 +7,13 @@
 namespace ap                                      {
     auto While()                                  {
         meta::src::push();
-            return []<is::op_t C>(C cond)         {
-                return [=](auto func)             {
-                    return op<opc::loop_while, C> {
-                        cond,
-                        func
-                    };
+            return []<is::op_t C>(C cond)                           {
+                return [=](auto func)                               {
+                    auto ret = op<opc::loop_while, C> { cond, func };
+
+                    meta::src::pop (   );
+                    meta::src::push(ret);
+                    return ret;
                 };
         };
     }
