@@ -7,6 +7,7 @@ add_library          (
     ../../include/ap/grammar/if.hpp
     ../../include/ap/grammar/while.hpp
     ../../include/ap/grammar/let.hpp
+    ../../include/ap/grammar/pack.hpp
 
     ../../include/ap/grammar.hpp
 )
