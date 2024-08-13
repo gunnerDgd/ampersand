@@ -30,8 +30,6 @@ namespace ap                                            {
                 func();
                 
                 src = meta::src::pop();
-                meta::src::pop ();
-                meta::src::push(*this);
         }
     };
 
@@ -51,8 +49,6 @@ namespace ap                                            {
                 func();
                 
                 src = meta::src::pop();
-                meta::src::pop();
-                meta::src::push(*this);
         }
     };
 }
