@@ -6,5 +6,6 @@
 #include "grammar/if.hpp"
 #include "grammar/while.hpp"
 #include "grammar/let.hpp"
+#include "grammar/pack.hpp"
 
 #endif
